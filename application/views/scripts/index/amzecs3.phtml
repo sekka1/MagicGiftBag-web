@@ -1,0 +1,47 @@
+<?php
+if ("cli" !== PHP_SAPI)
+{
+    echo "<pre>";
+}
+/*
+if (is_file('sampleSettings.php'))
+{
+  include 'sampleSettings.php';
+}
+*/
+defined('AWS_API_KEY') or define('AWS_API_KEY', 'AKIAJO6OOIFG3LCMZPGA');
+defined('AWS_API_SECRET_KEY') or define('AWS_API_SECRET_KEY', 'sQNUF++7eFhh8JIlTNgUnKKx3HdOhRmN+V7pto5F');
+defined('AWS_ASSOCIATE_TAG') or define('AWS_ASSOCIATE_TAG', 'wedvite-20');
+
+require '/usr/local/zend/apache2/htdocs/wedvite.us/public/public/amazon/Exeu-Amazon-ECS-PHP-Library-5cda219/lib/AmazonECS.class.php';
+
+try
+{
+    // get a new object with your API Key and secret key. Lang is optional.
+    // if you leave lang blank it will be US.
+    $amazonEcs = new AmazonECS(AWS_API_KEY, AWS_API_SECRET_KEY, 'de', AWS_ASSOCIATE_TAG);
+
+    // for the new version of the wsdl its required to provide a associate Tag
+    // @see https://affiliate-program.amazon.com/gp/advertising/api/detail/api-changes.html?ie=UTF8&pf_rd_t=501&ref_=amb_link_83957571_2&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=&pf_rd_s=assoc-center-1&pf_rd_r=&pf_rd_i=assoc-api-detail-2-v2
+    // you can set it with the setter function or as the fourth paramameter of ther constructor above
+    $amazonEcs->associateTag(AWS_ASSOCIATE_TAG);
+
+    // from now on you want to have pure arrays as response
+    $amazonEcs->returnType(AmazonECS::RETURN_TYPE_ARRAY);
+
+   // Back to DE and looking for some Music !! Warning "Large" produces a lot of Response
+   $response = $amazonEcs->country('com')->category($this->category)->responseGroup('Large')->search($this->search);
+   //$response = $amazonEcs->country('com')->category( 'Books')->responseGroup('Large')->search($this->search);
+   //var_dump($response);
+	print_r( $response );
+}
+catch(Exception $e)
+{
+  echo $e->getMessage();
+}
+
+if ("cli" !== PHP_SAPI)
+{
+    echo "</pre>";
+}
+

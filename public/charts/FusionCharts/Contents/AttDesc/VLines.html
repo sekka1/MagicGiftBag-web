@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="../Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">XML Attributes for Vertical Separator Lines </h2></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">vLines are vertical (or horizontal in case of bar charts) separator lines that   help you separate blocks of data. They can be placed between any two data   points, even at irregular intervals.  </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/vline1.jpg" width="400" height="250" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">The XML for the same is: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock">&lt;chart caption='Monthly Revenue' xAxisName='Month' yAxisName='Revenue' numberPrefix='$' showValues='0'&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Oct' value='420000' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Nov' value='910000' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Dec' value='680000' /&gt;<br />
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;vLine/&gt;</strong><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Jan' value='720000' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Feb' value='810000' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Mar' value='510000' /&gt;<br />
+&lt;/chart&gt;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">As you can see, a vertical separator line is introduced in the chart using the <span class="codeInline">&lt;vLine&gt;</span> element between those &lt;set&gt; elements, where you want it to be placed. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Customizing the looks of the separator line </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">The looks of the vertical separator line can be customized using the attributes of the <span class="codeInline">&lt;vLine&gt;</span> element given below: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><table width="100%" border="1" cellpadding="2" cellspacing="0" bordercolor="#f1f1f1">
+      <tr class="trAttHeader">
+        <td><span class="textBold"> Attribute Name </span> </td>
+        <td><span class="textBold"> Range </span> </td>
+        <td><span class="textBold"> Description </span> </td>
+      </tr>
+      <tr class="tableGreyBorder">
+        <td valign="top"><span class="text"> color </span> </td>
+        <td valign="top"><span class="text"> Hex Color </span> </td>
+        <td valign='top'><span class="text"> This attribute defines the color of vertical separator line. </span> </td>
+      </tr>
+      <tr class='trLightBlueBg'>
+        <td valign="top"><span class="text"> thickness </span> </td>
+        <td valign="top"><span class="text"> In Pixels </span> </td>
+        <td valign='top'><span class="text"> Thickness in pixels of the vertical separator line. </span> </td>
+      </tr>
+      <tr class="tableGreyBorder">
+        <td valign="top"><span class="text"> alpha </span> </td>
+        <td valign="top"><span class="text"> 0-100 </span> </td>
+        <td valign='top'><span class="text"> Alpha of the vertical separator line. </span> </td>
+      </tr>
+      
+    </table></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><strong>&lt;</strong>vLine<strong> color='999999' thickness='2' alpha='60' /&gt;</strong></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Dashed vertical separator lines </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>The vertical separator lines can be made dashed using <span class="codeInline">dashed='1'</span> in the <span class="codeInline">&lt;vLine&gt;</span> element. </p>
+        <p>The dash properties - dash length and dash gap can be customized using the <span class="codeInline">dashLen</span> &amp; <span class="codeInline">dashGap</span> attributes respectively. </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><strong>&lt;</strong>vLine<strong> <span class="codeInline">dashed='1'</span>  <span class="codeInline">dashLen</span>='2' <span class="codeInline">dashGap</span>='2'/&gt;</strong></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Using Styles to animate vertical separator lines </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">Animation effects can be applied to the vertical separator lines using STYLES. The following XML would animate the y-Scale of the separator lines. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><p>&lt;chart caption='Monthly Revenue' xAxisName='Month' yAxisName='Revenue' numberPrefix='$' showValues='0'&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Oct' value='420000' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Nov' value='910000' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Dec' value='680000' /&gt;<br />
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;</strong>&lt;vLine/&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Jan' value='720000' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Feb' value='810000' /&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;set label='Mar' value='510000' /&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>&lt;styles&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;definition&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style name='myAnim' type='animation' param='_yScale' start</strong><strong>='0' duration='1'/&gt;
+    </strong><strong><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/definition&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;application&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;apply toObject='VLINES' styles='myAnim' /&gt; </strong><strong><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/application&gt;<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&lt;/styles&gt;</strong><br />
+      &lt;/chart&gt;</p></td>
+  </tr>
+</table>
+</body>
+</html>

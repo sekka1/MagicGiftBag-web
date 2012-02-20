@@ -1,0 +1,227 @@
+.trdark {
+BACKGROUND-COLOR:#B0BF9D;
+}
+.trlight {
+BACKGROUND-COLOR:#F2F2F2;
+}
+.trmid {
+BACKGROUND-COLOR:#EFEFDF;
+}
+.tableWithBorder {
+Border:1px #999999 solid;
+}
+
+.select 
+{
+FONT-SIZE: 9pt; 
+COLOR: black; 
+FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+
+TEXT-DECORATION:none;
+BACKGROUND-COLOR:#F2F2F2;
+}
+
+
+.pageHeader{
+	COLOR: #291E40;
+	FONT-FAMILY: Verdana;
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 12pt;
+}
+.header
+{
+	COLOR: #291E40;
+	FONT-FAMILY: Verdana;
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 9pt;
+	
+}
+.headerwhite
+{
+	COLOR: #FFFFFF;
+	FONT-FAMILY: Verdana;
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 11px;
+	
+}
+.headingtable
+{
+	COLOR: #FFA11C;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 9pt;
+	FONT-WEIGHT: bold;
+	
+	PADDING-TOP: 5px;
+	PADDING-BOTTOM: 5px;
+}
+.text
+{
+	COLOR: #291E40;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	
+}
+.textBold
+{
+	COLOR: #291E40;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	
+	FONT-WEIGHT: bold;
+}
+.textBoldLight
+{
+	COLOR: #FFFFFF;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	FONT-WEIGHT: bold;
+	
+}
+.highlightBlock{
+	BACKGROUND: #F1F1F1;
+	COLOR: #291E40;
+	BORDER: 1px solid #291E40;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	
+	PADDING: 10px;
+}
+.imageCaption
+{
+	COLOR: #291E40;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	
+}
+.imageBorder
+{
+	BORDER: 1px solid #f1f1f1;
+}
+A
+{
+	COLOR: #291E40;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	
+	FONT-WEIGHT: normal;
+	TEXT-DECORATION:none;
+}
+A:hover
+{
+	COLOR: #FFA000;
+}
+.trVeryLightYellowBg
+{
+	BACKGROUND: #FFFCF0;
+}
+.lightBlueTr
+{
+	BACKGROUND: #E0E9ED;
+	BORDER-RIGHT:1px solid #94B0BE;
+	BORDER-BOTTOM:1px solid #94B0BE;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	
+}
+.greyBorderTable
+{
+	BORDER: 1px solid #f1f1f1;
+}
+.yellowBorderTable
+{
+	BORDER: 1px solid #FFA11C;
+}
+.lightYellowBorderTable
+{
+	BORDER: 1px solid #FEECB4;
+}
+
+.blueTr
+{
+	BACKGROUND: #94B0BE;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	
+}
+.greyTr
+{
+	BACKGROUND: #F1f1f1;
+}
+.darkGreyTr
+{
+	BACKGROUND: #999999;
+}
+.darkYellowTr
+{
+	BACKGROUND: #FFA11C;
+	background-color: #FFA11C;
+}
+.lightYellowTr
+{
+	BACKGROUND: #FEECB4;
+}
+.vLightYellowTr
+{
+	BACKGROUND: #FEF7E0;
+}
+.formtable
+{
+	COLOR: #291E40;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	
+	FONT-WEIGHT:none;
+}
+.textbox
+{
+	BACKGROUND: #F8F8F8;
+	BORDER: 1px solid #999999;
+	COLOR: #999999;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 11px;
+		
+}
+
+.button
+{
+	BACKGROUND: #F8F8F8;
+	BORDER: 1px solid #999999;
+	COLOR: #999999;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 11px;
+		
+	FONT-WEIGHT: bold;
+}
+
+
+.gridDarkStrip
+{
+	background:#eeeeee;
+	border-bottom:1px solid #cccccc;
+}
+.gridLightStrip
+{
+	background:#f9f9f9;
+	border-bottom:1px solid #cccccc;
+}
+.gridBorderBottom
+{
+	border-bottom:1px solid #cccccc;
+}
+.gridColorDIV
+{
+	width:8px;
+	height:8px;
+	font-size:8px
+}
+.gridNoFont
+{
+	font-size:1px
+}
+.gridHeader
+{
+	background:#aaaaaa;
+	border-bottom:1px outset #cccccc;
+
+}
+

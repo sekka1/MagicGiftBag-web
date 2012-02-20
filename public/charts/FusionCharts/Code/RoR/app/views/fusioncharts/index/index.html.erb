@@ -1,0 +1,112 @@
+<html>
+<head>
+	<title>
+	FusionCharts v3 Demo Application
+	</title>
+<link href="/stylesheets/Style.css" rel="stylesheet" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" bottomMargin="0" rightMargin="0" bgColor="#FFFFFF">
+  
+    <table width="960" align="center" cellpadding="0" cellspacing="0" border="0" bgColor="#FFFFFF">
+		<tr height="70">
+			<td width="33">&nbsp;	
+			
+			</td>
+			<td align="left" valign="bottom">
+				<a href="http://www.InfoSoftGlobal.com" target="_blank"><img src="/images/IGPLogo.jpg" alt="InfoSoft Global" border="0"></a>
+			</td>
+			<td align="right" valign="bottom">
+				<img src="/images/TopRightText.gif" border="0">	
+			</td>
+			<td width="37">&nbsp;	
+			
+			</td>
+		</tr>
+		<tr height="70" >
+			<td colspan="4"></td>
+		</tr>
+		<tr>
+			<td width="33">		
+			</td>
+			<td height="1" colspan="2" bgColor="#FFFFFF">
+      	<!-- Site navigation buttons -->
+        <table bgColor="#FFFFFF">
+		    <tr>
+				<td width="33">		
+				</td>
+				<td height="1" colspan="2" bgColor="#FFFFFF">
+				</td>
+				<td width="37">		
+				</td>
+			</tr>
+			<tr height="30">
+				<td width="33">		
+				</td>
+				<td height="22" colspan="2" align="center" bgColor="#EEEEEE" valign="middle">
+					<nobr>
+					<table border="1" align="center" cellpadding="1" cellspacing="0" class="tableWithBorder">
+					    <tr class="trdark">
+					    <td><strong>BasicExample</strong></td>
+					    <td><strong>ArrayExample</strong></td>
+					    <td><strong>FormBasedChart</strong></td>
+					    <td><strong>DBDataURL</strong></td>
+					    <td><strong>DBJs</strong></td>
+					    <td><strong>DBExample</strong></td>
+					    <td><strong>DBjsDataURL</strong></td>
+					    </tr>
+					    <tr>
+					    <td>
+					    <ul>
+					    <li><span class="textbolddark"> <%= link_to 'Basic Chart', :controller=>'fusioncharts/basic_example',:action => 'basic_chart' %></span></li>
+					    <li><span class="textbolddark"> <%= link_to 'Basic Data XML', :controller=>'fusioncharts/basic_example',:action => 'basic_data_xml' %></span></li>
+					    <li><span class="textbolddark"> <%= link_to 'Simple Chart', :controller=>'fusioncharts/basic_example',:action => 'simple_chart' %></span></li>
+					    <li><span class="textbolddark"> <%= link_to 'Data XML', :controller=>'fusioncharts/basic_example',:action => 'data_xml' %></span></li>
+					    </ul>
+					    </td>
+					    <td>
+					    <ul>
+						 <li><span class="textbolddark"> <%= link_to 'Single Series', :controller=>'fusioncharts/array_example',:action => 'single_series' %></span></li>
+					     <li><span class="textbolddark"><%= link_to 'Multi Series', :controller=>'fusioncharts/array_example',:action => 'multi_series' %></span></li>
+					     <li><span class="textbolddark"><%= link_to 'Combination', :controller=>'fusioncharts/array_example',:action => 'combination' %></span></li>
+					     <li><span class="textbolddark"> <%= link_to 'Stacked', :controller=>'fusioncharts/array_example',:action => 'stacked' %></span></li>
+					    </ul>
+					    </td>
+					
+					    <td>
+					    <ul>
+					    <li><span class="textbolddark"> <%= link_to 'Default', :controller=>'fusioncharts/form_based',:action => 'default' %></span></li>
+					    </ul>
+					    </td>
+					     <td>
+					    <ul>
+					    <li><span class="textbolddark"><%= link_to 'Default', :controller=>'fusioncharts/db_data_url',:action => 'default' %></span></li>
+					    </ul>
+					    </td>
+					    <td>
+					    <ul>
+					    <li><span class="textbolddark"><%= link_to 'Default', :controller=>'fusioncharts/db_js',:action => 'default' %></span></li>
+					    </ul>
+					    </td>
+					     <td>
+					    <ul>
+					    <li><span class="textbolddark"> <%= link_to 'Basic DB Example', :controller=>'fusioncharts/db_example',:action => 'basic_dbexample' %></span></li>
+					    <li><span class="textbolddark"><%= link_to 'Default', :controller=>'fusioncharts/db_example',:action => 'default' %></span></li>
+					    </ul>
+					    </td>
+					      <td>
+					    <ul>
+					    <li><span class="textbolddark"> <%= link_to 'Default', :controller=>'fusioncharts/db_js_dataurl',:action => 'default' %></span></li>
+					    </ul>
+					    </td>
+					    </tr>
+		   		 </table>
+			</table>
+			</td>
+			<td width="37">		
+			</td>
+		</tr>
+   <table>
+  <!-- End of Site Navigation Buttons -->
+<!-- End of master container -->
+</body>
+</html>

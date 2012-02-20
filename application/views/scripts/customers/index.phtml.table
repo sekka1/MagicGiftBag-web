@@ -1,0 +1,26 @@
+<table border="1">
+<tr><td>Name</td><td>Contact</td><td>Address</td><td>City</td><td>State</td><td>Zip</td><td>Phone</td>
+<td>Software</td><td>Probe</td><td>Extra Services</td>
+</tr>
+
+<?php
+
+foreach( $this->all_companies as $a_company ){
+
+	echo '<tr>';
+	echo '<td>' . $a_company['name'] . '</td>';
+	echo '<td>' . $a_company['contact'] . '</td>';
+	echo '<td>' . $a_company['address'] . '</td>';
+	echo '<td>' . $a_company['city'] . '</td>';
+	echo '<td>' . $a_company['state'] . '</td>';
+	echo '<td>' . $a_company['zip'] . '</td>';
+	echo '<td>' . $a_company['phone_number'] . '</td>';
+	echo '<td><a href="/customers/software/id/'. $a_company['company_id_seq'] .'">Edit/View</a>';
+	echo '<td><a href="/customers/probe/id/'. $a_company['company_id_seq'] .'">Edit/View</a>';
+	echo '<td><a href="/customers/extra/id/'. $a_company['company_id_seq'] .'">Edit/View</a>';
+	echo '</tr>';
+}
+
+?>
+
+</table>

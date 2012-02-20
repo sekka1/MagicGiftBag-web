@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><h2 class="pageHeader">FusionCharts and Flash &gt; Using Rotated Text </h2></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>FusionCharts allows you to use rotated text for x-axis labels, y-axis name and data values. However, if you want to use rotated text when loading the charts in your Flash movie, you need to make sure that Verdana font face is embedded in your parent movie. Here, we'll show you how to do that.</p>
+    <p>Before that, let's see what happens if we do not embed the Verdana font face but rotate the labels.  </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Result when not embedding the font </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>We modify our <span class="codeInline">MyFirstChart.fla</span> example to have the following XML Code:</p>
+    <p class="codeInline">var strXML:String = &quot;&lt;chart showBorder='0' bgAlpha='0,0' palette='1' caption='Hourly Working Rate' numberPrefix='$' <strong>labelDisplay='ROTATE' slantLabels='1'</strong>&gt;&quot;; </p>
+    <p>Here we've basically added the required attributes to rotate the x-axis labels. If you run this movie now, you'll see that the x-axis labels have disappeared from the chart as below.  </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_Rot_Prb.jpg" width="512" height="408" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>This is because the rotated text could not find Verdana font face embedded in your Flash movie. Let's now see how to embed the font. </p>      </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Embedding the font </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>To embed the Verdana font face, create a new layer in your Flash movie in the main time line. Name it as &quot;Embedded Font&quot;. In any keyframe of this layer, create a dynamic text box outside the stage area with following properties set:</p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_Rot_txt.jpg" width="600" height="255" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>As you can see in the image above:</p>
+      <ul>
+        <li>We've created the text box outside visible stage area, so that it's not displayed to the User.</li>
+        <li>We've selected Verdana (non-bold) font and embedded (by clicking the Embed button) the following characters: Uppercase, Lowercase, Numerals &amp; Punctuations. If you think you'll need to use more characters in rotated mode, just select them to be included in this list. If you include too many characters, the output size of your SWF proportionately increases. </li>
+        <li>You need to include the font only once in your movie. After that, charts at any depth or in nested movie clips can access the embedded fonts.</li>
+        <li>You need to necessarily include Verdana font only, as that's the font FusionCharts uses for rotated text. </li>
+      </ul>
+    <p>When you now run your movie, you'll get the following output, as desired: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Flash_rot_out.jpg" alt="" width="512" height="408" /></td>
+  </tr>
+</table>
+</body>
+</html>

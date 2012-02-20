@@ -1,0 +1,151 @@
+/* Custom Style - Product Search*/
+ul.token-input-list-products {
+    overflow:auto;
+/*    overflow-y: scroll;*/
+    height: auto !important; 
+    max-height:4em;
+    min-width: 400px;
+/*    border: 1px solid #8496ba;*/
+    cursor: text;
+    font-size: 12px;
+    font-family: Verdana;
+    min-height: 1px;
+    z-index: 999;
+    margin: 0;
+    padding: 0;
+/*    background-color: yellow;*/
+    list-style-type: none;
+    clear: left;
+    vertical-align:middle;
+}
+
+ul.token-input-list-products li input {
+/* Styling of the input box*/
+    border: 0;
+    width: 450px;
+    height:0;
+    overflow-y:scroll;
+    padding: 3px 0px;
+/*    background-color: red;*/
+    margin: 2px 0;
+    -webkit-appearance: caret;
+    vertical-align:bottom;
+}
+
+li.token-input-token-products {
+    overflow: hidden; 
+    height: auto !important; 
+    height: 15px;
+    margin: 3px 0;
+    padding: 1px 3px;
+    background-color: #eff2f7;
+    color: #000;
+    cursor: default;
+    border: 1px solid #ccd5e4;
+    font-size: 1.5em;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: left;
+    white-space: nowrap;
+}
+
+li.token-input-token-products p {
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
+
+li.token-input-token-products span {
+    color: #a6b3cf;
+    margin-left: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+li.token-input-selected-token-products {
+    background-color: #5670a6;
+    border: 1px solid #3b5998;
+    color: #fff;
+}
+
+li.token-input-input-token-products {
+    float: left;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display:none;
+}
+
+div.token-input-dropdown-products {
+    position: absolute;
+    width: 200px;
+    background-color: #fff;
+    overflow: hidden;
+    
+    /* Apply border to all sides since drop down doesnt come down from an input box. Thus neeeds top border*/
+    border: 1px solid #ccc;
+/*    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;*/
+    cursor: default;
+    font-size: 11px;
+    font-family: Verdana;
+    z-index: 999;
+}
+
+div.token-input-dropdown-products p {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    color: #777;
+}
+
+div.token-input-dropdown-products ul {
+    margin: 0;
+    padding: 0;
+}
+
+div.token-input-dropdown-products ul li {
+    background-color: #fff;
+    padding: 3px;
+    margin:0;
+    list-style-type: none;
+    text-indent:-6px;
+}
+
+div.token-input-dropdown-products ul li.token-input-dropdown-item-products {
+    background-color: #fff;
+}
+
+div.token-input-dropdown-products ul li.token-input-dropdown-item2-products {
+    background-color: #fff;
+}
+
+div.token-input-dropdown-products ul li em {
+    font-weight: bold;
+    font-style: normal;
+}
+
+div.token-input-dropdown-products ul li.token-input-selected-dropdown-item-products {
+    background-color: #3b5998;
+    color: #fff !important;
+}
+
+div.token-input-dropdown-products a {
+    margin: 0;
+    padding: 5px;
+    color: #000;
+    text-decoration:none;
+    text-align:left;
+}
+/*div.token-input-dropdown-products a:hover {
+    color: #fff;
+}*/
+div.token-input-dropdown-products ul li:hover {
+    background-color: #3b5998;
+    color: #fff !important;
+}
+div.token-input-dropdown-products ul li:hover a {
+    color: #fff;
+}

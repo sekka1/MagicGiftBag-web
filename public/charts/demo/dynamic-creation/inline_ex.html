@@ -1,0 +1,73 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>Inline CodeThatCalendar Example</title>
+<meta http-equiv="content-language" content=en>
+<meta name=robots content="DISALLOW">
+<meta http-equiv=expires content="Mon, 01 Jan 1990 00:00:00 GMT">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv=pragma content="no-cache">
+<meta name="revisit-after" content="1 day">
+<meta http-equiv="content-script-type" content="text/javascript">
+<link rel=stylesheet type="text/css" href="s.css">
+
+<link href="ctc.css" rel="stylesheet" type="text/css"><script language="javascript1.2" src="../Scripts/codethatcalendarstd.js"></script><script language="javascript1.2" src="inline_ex.js"></script></head>
+<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor=#FFFFFF>
+<p class=cp22><a href="http://www.codethat.com/"><img src="img/logo.gif" width=148 height=40 border=0 alt="CodeThat.com"></a></p>
+<p class=cp25><font class=cf5>Inline CodeThatCalendar Example</font></p><script language="javascript1.2">
+<!--
+var c1 = new CodeThatCalendar(caldef1);
+c1.setLink("04/26/2005", "javascript:alert(\"My birthday!\");");
+c1.create(document, "id1");
+//-->
+</script>
+
+<p class=cp10>Inline calendar</p>
+<form>
+<p class=cp10><input class=ci3 name=id1 type=textarea/></p>
+</form>
+
+<pre class=cc1>
+<font class=cc4>&lt;</font><font class=cc3>script language="javascript1.2"</font><font class=cc4>&gt;
+&lt;!--</font>
+<font class=cc3><font class=cc5>var</font> caldef1 <font class=cc2>=</font>
+<font class=cc7>{</font>
+	firstday <font class=cc2>:</font> <font class=cc4>0</font><font class=cc2>,</font>
+	dtype <font class=cc2>:</font></font> <font class=cc6>'MM/dd/yyyy'</font><font class=cc3><font class=cc2>,</font>
+	width <font class=cc2>:</font> <font class=cc4>250</font><font class=cc2>,</font>
+	windoww <font class=cc2>:</font> <font class=cc4>300</font><font class=cc2>,</font>
+	windowh <font class=cc2>:</font> <font class=cc4>170</font><font class=cc2>,</font>
+	border_width <font class=cc2>:</font> <font class=cc4>0</font><font class=cc2>,</font>
+	border_color <font class=cc2>:</font></font> <font class=cc6>'#0000d3'</font><font class=cc3><font class=cc2>,</font>
+	dn_css <font class=cc2>:</font></font> <font class=cc6>'clsDayName'</font><font class=cc3><font class=cc2>,</font>
+	cd_css <font class=cc2>:</font></font> <font class=cc6>'clsCurrentDay'</font><font class=cc3><font class=cc2>,</font>
+	wd_css <font class=cc2>:</font></font> <font class=cc6>'clsWorkDay'</font><font class=cc3><font class=cc2>,</font>
+	we_css <font class=cc2>:</font></font> <font class=cc6>'clsWeekEnd'</font><font class=cc3><font class=cc2>,</font>
+	wdom_css <font class=cc2>:</font></font> <font class=cc6>'clsWorkDayOtherMonth'</font><font class=cc3><font class=cc2>,</font>
+	weom_css <font class=cc2>:</font></font> <font class=cc6>'clsWeekEndOtherMonth'</font><font class=cc3><font class=cc2>,</font>
+	headerstyle <font class=cc2>:</font>
+	<font class=cc7>{</font>
+		type <font class=cc2>:</font></font> <font class=cc6>'buttons'</font><font class=cc3><font class=cc2>,</font>
+		css <font class=cc2>:</font></font> <font class=cc6>'clsDayName'</font>
+	<font class=cc3><font class=cc7>}</font><font class=cc2>,</font>
+	monthnames <font class=cc2>:</font> <font class=cc8>[</font></font><font class=cc6>"January"</font><font class=cc2>,</font> <font class=cc6>"February"</font><font class=cc2>,</font> <font class=cc6>"March"</font><font class=cc2>,</font> <font class=cc6>"April"</font><font class=cc2>,</font>
+	<font class=cc6>"May"</font><font class=cc2>,</font> <font class=cc6>"June"</font><font class=cc2>,</font> <font class=cc6>"July"</font><font class=cc2>,</font> <font class=cc6>"August"</font><font class=cc2>,</font> <font class=cc6>"September"</font><font class=cc2>,</font>
+	<font class=cc6>"October"</font><font class=cc2>,</font> <font class=cc6>"November"</font><font class=cc2>,</font> <font class=cc6>"December"</font><font class=cc3><font class=cc8>]</font><font class=cc2>,</font>
+	daynames <font class=cc2>:</font> <font class=cc8>[</font></font><font class=cc6>"Su"</font><font class=cc2>,</font> <font class=cc6>"Mo"</font><font class=cc2>,</font> <font class=cc6>"Tu"</font><font class=cc2>,</font> <font class=cc6>"We"</font><font class=cc2>,</font> <font class=cc6>"Th"</font><font class=cc2>,</font> <font class=cc6>"Fr"</font><font class=cc2>,</font> <font class=cc6>"Sa"</font><font class=cc3><font class=cc8>]</font>
+<font class=cc7>}</font><font class=cc2>;</font>
+<font class=cc5>var</font> c1 <font class=cc2>=</font> <font class=cc5>new</font> CodeThatCalendar<font class=cc2>(</font>caldef1<font class=cc2>);</font></font> 
+//-->
+<font class=cc4>&lt;</font><font class=cc5>/</font><font class=cc3>script</font><font class=cc4>&gt;
+
+&lt;</font><font class=cc3>body</font><font class=cc4>&gt;	
+	&lt;</font><font class=cc3>P</font><font class=cc4>&gt;</font>Inline calendar<font class=cc4>&lt;</font><font class=cc5>/</font><font class=cc3>P</font><font class=cc4>&gt;
+	&lt;</font><font class=cc3>form</font><font class=cc4>&gt;
+		&lt;</font><font class=cc3>input name="id1" type="textarea"/</font><font class=cc4>&gt;
+	&lt;</font><font class=cc5>/</font><font class=cc3>form</font><font class=cc4>&gt;
+	&lt;</font><font class=cc3>script language="javascript1.2"</font><font class=cc4>&gt;
+&lt;!--</font>
+<font class=cc3>c1<font class=cc2>.</font>create<font class=cc2>(</font>document<font class=cc2>,</font></font> <font class=cc6>"id1"</font><font class=cc2>);</font> 
+//-->
+<font class=cc4>&lt;</font><font class=cc5>/</font><font class=cc3>script</font><font class=cc4>&gt;</font>
+</pre>
+
+</body></html>

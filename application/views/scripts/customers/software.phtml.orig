@@ -1,0 +1,66 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Grid with RowEditor Example</title>
+    <link rel="stylesheet" type="text/css" href="/extjs/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="/extjs/css/grid-examples.css" />
+    <!-- Common Styles for the examples -->
+    <link rel="stylesheet" type="text/css" href="/extjs/css/examples.css" />
+    <link rel="stylesheet" type="text/css" href="/extjs/css/RowEditor.css" />
+
+	<style type="text/css">
+		.x-grid3 .x-window-ml{
+			padding-left: 0;	
+		} 
+		.x-grid3 .x-window-mr {
+			padding-right: 0;
+		} 
+		.x-grid3 .x-window-tl {
+			padding-left: 0;
+		} 
+		.x-grid3 .x-window-tr {
+			padding-right: 0;
+		} 
+		.x-grid3 .x-window-tc .x-window-header {
+			height: 3px;
+			padding:0;
+			overflow:hidden;
+		} 
+		.x-grid3 .x-window-mc {
+			border-width: 0;
+			background: #cdd9e8;
+		} 
+		.x-grid3 .x-window-bl {
+			padding-left: 0;
+		} 
+		.x-grid3 .x-window-br {
+			padding-right: 0;
+		}
+		.x-grid3 .x-panel-btns {
+			padding:0;
+		}
+		.x-grid3 .x-panel-btns td.x-toolbar-cell {
+			padding:3px 3px 0;
+		}
+		.x-box-inner {
+			zoom:1;
+		}
+        .icon-user-add {
+            background-image: url(/extjs/pic/user_add.gif) !important;
+        }
+        .icon-user-delete {
+            background-image: url(/extjs/pic/user_delete.gif) !important;
+        }        
+    </style>
+    
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"> </script><script type="text/javascript">_uacct = "UA-1396058-1";urchinTracker();</script><!-- LIBS -->
+    <script type="text/javascript" src="/extjs/ext-base.js"></script>
+    <script type="text/javascript" src="/extjs/ext-all.js"></script>
+    <script type="text/javascript" src="/extjs/gen-names.js"></script>
+    <script type="text/javascript" src="/extjs/RowEditor.js"></script>
+
+    <script type="text/javascript" src="/extjs/row-editor.js"></script>
+</head>
+<body>
+</body>
+</html>

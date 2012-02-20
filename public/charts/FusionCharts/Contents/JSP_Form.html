@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" /></head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td>
+      <h2 class="pageHeader">Using FusionCharts with JSP &gt; Charting Data from 
+        Forms </h2>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text">
+      <p>In this section, we'll show you how to use FusionCharts with JSP to plot 
+        data collected in forms. </p>
+      <p>We'll build a simple restaurant sales example, where the user will enter the items sold by a restaurant in a given week. This data will be submitted in a form to the server. We'll acquire this data and plot in on a chart. For the sake of simplicity, we wouldn't do any processing on this data. However, your real life applications might process data before presenting it on the chart. </p>
+    <p><strong>Before you go further with this page, we recommend you to please see the previous section &quot;Basic Examples&quot; as we start off from concepts explained in that page. </strong></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="highlightBlock">The code examples contained in this 
+      page are present in<span class="codeInline"> Download Package &gt; Code 
+      &gt; JSP</span> &gt; <span class="codeInline">FormBased</span> folder. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Building the Form </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">The form is contained in <span class="codeInline">Default.jsp</span> 
+      and looks as under: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Code_Form.gif" width="445" height="387" class="imageBorder" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">It's a very simple form which submits to <span class="codeInline">Chart.jsp</span>. 
+      As such, we wouldn't go into the code of this form. You can directly open 
+      the source from download and see it. </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">Requesting the data and Creating the Chart </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">The work of requesting the data from submitted 
+      form and creating the chart is done in <span class="codeInline">Chart.jsp</span>, 
+      present in the same folder. It contains the following code: </td>
+  </tr>
+  <tr>
+    <td valign="top" class="codeBlock"><BR>
+      <p>&lt;%@&nbsp;include&nbsp;file=&quot;../Includes/FusionCharts.jsp&quot;%&gt;<br />
+        &lt;HTML&gt;<br />
+        &nbsp;&nbsp;&nbsp;&lt;HEAD&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TITLE&gt;FusionCharts&nbsp;-&nbsp;Form&nbsp;Based&nbsp;Data&nbsp;Charting&nbsp;Example&lt;/TITLE&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;SCRIPT&nbsp;LANGUAGE=&quot;Javascript&quot;&nbsp;SRC=&quot;../../FusionCharts/FusionCharts.js&quot;&gt;&lt;/SCRIPT&gt;<br />
+        &nbsp;&nbsp;&nbsp;&lt;/HEAD&gt;<br />
+        &nbsp;&nbsp;&nbsp;&lt;BODY&gt;
+        &nbsp;&nbsp;&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&lt;%<br />
+        &nbsp;&nbsp;&nbsp;<span class="codeComment">//We&nbsp;first&nbsp;request&nbsp;the&nbsp;data&nbsp;from&nbsp;the&nbsp;form&nbsp;(Default.jsp)</span><br />
+        &nbsp;&nbsp;&nbsp;String&nbsp;strSoups=&quot;&quot;,strSalads=&quot;&quot;,strSandwiches=&quot;&quot;,strBeverages=&quot;&quot;,strDesserts=&quot;&quot;;</p>
+      <p>&nbsp;&nbsp;&nbsp;strSoups&nbsp;=&nbsp;request.getParameter(&quot;Soups&quot;);<br />
+        &nbsp;&nbsp;&nbsp;strSalads&nbsp;=&nbsp;request.getParameter(&quot;Salads&quot;);<br />
+        &nbsp;&nbsp;&nbsp;strSandwiches&nbsp;=&nbsp;request.getParameter(&quot;Sandwiches&quot;);<br />
+        &nbsp;&nbsp;&nbsp;strBeverages&nbsp;=&nbsp;request.getParameter(&quot;Beverages&quot;);<br />
+        &nbsp;&nbsp;&nbsp;strDesserts&nbsp;=&nbsp;request.getParameter(&quot;Desserts&quot;);</p>
+      <p>&nbsp;&nbsp;&nbsp;<span class="codeComment">/*In&nbsp;this&nbsp;example,&nbsp;we're&nbsp;directly&nbsp;showing&nbsp;this&nbsp;data&nbsp;back&nbsp;on&nbsp;chart.<br />
+&nbsp;&nbsp;&nbsp;In&nbsp;your&nbsp;apps,&nbsp;you&nbsp;can&nbsp;do&nbsp;the&nbsp;required&nbsp;processing&nbsp;and&nbsp;then&nbsp;show&nbsp;the&nbsp;<br />
+&nbsp;&nbsp;&nbsp;relevant&nbsp;data&nbsp;only.*/</span></p>
+      <p><span class="codeComment">&nbsp;&nbsp;&nbsp;//Now&nbsp;that&nbsp;we've&nbsp;the&nbsp;data&nbsp;in&nbsp;variables,&nbsp;we&nbsp;need&nbsp;to&nbsp;convert&nbsp;this&nbsp;into&nbsp;XML.<br />
+&nbsp;&nbsp;&nbsp;//The&nbsp;simplest&nbsp;method&nbsp;to&nbsp;convert&nbsp;data&nbsp;into&nbsp;XML&nbsp;is&nbsp;using&nbsp;string&nbsp;concatenation.&nbsp;</span><br />
+        &nbsp;&nbsp;&nbsp;String&nbsp;strXML=&quot;&quot;;<br />
+        &nbsp;<span class="codeComment">&nbsp;&nbsp;//Initialize&nbsp;&lt;chart&gt;&nbsp;element</span><br />
+        &nbsp;&nbsp;&nbsp;strXML&nbsp;=&nbsp;&quot;&lt;chart&nbsp;caption='Sales&nbsp;by&nbsp;Product&nbsp;Category'&nbsp;subCaption='For&nbsp;this&nbsp;week'&nbsp;<br />
+        showPercentValues='1'&nbsp;pieSliceDepth='30'&nbsp;showBorder='1'&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;<span class="codeComment">//Add&nbsp;all&nbsp;data</span><br />
+        &nbsp;&nbsp;&nbsp;strXML&nbsp;=&nbsp;strXML&nbsp;+&nbsp;&quot;&lt;set&nbsp;label='Soups'&nbsp;value='&quot;&nbsp;+&nbsp;strSoups&nbsp;+&nbsp;&quot;'&nbsp;/&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;strXML&nbsp;=&nbsp;strXML&nbsp;+&nbsp;&quot;&lt;set&nbsp;label='Salads'&nbsp;value='&quot;&nbsp;+&nbsp;strSalads&nbsp;+&nbsp;&quot;'&nbsp;/&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;strXML&nbsp;=&nbsp;strXML&nbsp;+&nbsp;&quot;&lt;set&nbsp;label='Sandwiches'&nbsp;value='&quot;&nbsp;+&nbsp;strSandwiches&nbsp;+&nbsp;&quot;'&nbsp;/&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;strXML&nbsp;=&nbsp;strXML&nbsp;+&nbsp;&quot;&lt;set&nbsp;label='Beverages'&nbsp;value='&quot;&nbsp;+&nbsp;strBeverages&nbsp;+&nbsp;&quot;'&nbsp;/&gt;&quot;;<br />
+        &nbsp;&nbsp;&nbsp;strXML&nbsp;=&nbsp;strXML&nbsp;+&nbsp;&quot;&lt;set&nbsp;label='Desserts'&nbsp;value='&quot;&nbsp;+&nbsp;strDesserts&nbsp;+&nbsp;&quot;'&nbsp;/&gt;&quot;;<br />
+        &nbsp;<span class="codeComment">&nbsp;&nbsp;//Close&nbsp;&lt;chart&gt;&nbsp;element</span><br />
+        &nbsp;&nbsp;&nbsp;strXML&nbsp;=&nbsp;strXML&nbsp;+&nbsp;&quot;&lt;/chart&gt;&quot;;</p>
+      <p>&nbsp;&nbsp;<span class="codeComment">&nbsp;//Create&nbsp;the&nbsp;chart&nbsp;-&nbsp;Pie&nbsp;3D&nbsp;Chart&nbsp;with&nbsp;data&nbsp;from&nbsp;strXML</span><br />
+        &nbsp;&nbsp;&nbsp;String&nbsp;chartCode=&nbsp;createChart(&quot;../../FusionCharts/Pie3D.swf&quot;,&nbsp;&quot;&quot;,&nbsp;strXML,&nbsp;&quot;Sales&quot;,<br />
+        &nbsp;500,&nbsp;300,&nbsp;false,&nbsp;false);<br />
+        &nbsp;&nbsp;&nbsp;%&gt;<br />
+        &nbsp;&nbsp;&nbsp;&lt;%=chartCode%&gt;<br />
+        &lt;/BODY&gt;<br />
+    &lt;/HTML&gt;</p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>As you can see in the above code, we're doing the following:</p>
+      <ul>
+        <li>Including <span class="codeInline">FusionCharts.js</span> and<span class="codeInline"> 
+          FusionCharts.jsp</span> in this page. </li>
+        <li>Requesting data from the submitted form and storing it in local variables</li>
+        <li>Creating an XML data document using string concatenation and storing it in <span class="codeInline">strXML</span> variable  </li>
+        <li>Creating a Pie 3D chart using create<span class="codeInline">Chart()</span> 
+          function and passing <span class="codeInline">strXML</span> as <span class="codeInline">dataXML</span> 
+          for the chart and rendering it. </li>
+      </ul>
+    <p>When you finally run the code, you'll see a chart as under: </p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/Code_FormChart.jpg" width="468" height="268" class="imageBorder" /></td>
+  </tr>
+</table>
+</body>
+</html>

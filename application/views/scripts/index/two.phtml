@@ -1,0 +1,299 @@
+<?php
+
+require '../public/src/facebook.php';
+
+// Create our Application instance (replace this with your appId and secret).
+$facebook = new Facebook(array(
+  'appId'  => '197440486945083',
+  'secret' => 'ac5377e0d6f60fc22219fd4ea79227ed',
+  'cookie' => true,
+  'api' => '9f5ce02dbfae587d63dfb5368fcebcf3',
+  'baseurl' => 'http://wedvite.us',
+));
+
+// We may or may not have this data based on a $_GET or $_COOKIE based session.
+//
+// If we get a session here, it means we found a correctly signed session using
+// the Application Secret only Facebook and the Application know. We dont know
+// if it is still valid until we make an API call using the session. A session
+// can become invalid if it has already expired (should not be getting the
+// session back in this case) or if the user logged out of Facebook.
+$session = $facebook->getSession();
+
+$me = null;
+// Session based API call.
+if ($session) {
+  try {
+    $uid = $facebook->getUser();
+    $me = $facebook->api('/me');
+  } catch (FacebookApiException $e) {
+    error_log($e);
+  }
+}
+
+// login or logout url will be needed depending on current user state.
+if ($me) {
+  // User is already logged in
+  $logoutUrl = $facebook->getLogoutUrl();
+//  header('Location: http://wedvite.us/events');  
+
+} else {
+  // User is not logged in
+
+  $loginUrl = $facebook->getLoginUrl(array('req_perms' => 'user_status,publish_stream, user_photos, friends_photos, friends_status, user_videos, friends_videos, read_stream, read_friendlists, manage_friendlists, read_requests'));
+ // All Perm
+// $facebook->getLoginUrl(array('req_perms' => 'user_about_me, user_activities, user_birthday, user_education_history, user_events, user_groups, user_hometown, user_interests, user_likes, user_location, user_notes, user_online_presence, user_photo_video_tags, user_photos, user_relationships, user_relationship_details, user_religion_politics, user_status, user_videos, user_website, user_work_history, email, read_friendlists, read_insights, read_mailbox, read_requests, read_stream, xmpp_login, ads_management, user_checkins, friends_about_me, friends_activities, friends_birthday, friends_education_history, friends_events, friends_groups, friends_hometown, friends_interests, friends_likes, friends_location, friends_notes, friends_online_presence, friends_photo_video_tags, friends_photos, friends_relationships, friends_relationship_details, friends_religion_politics, friends_status, friends_videos, friends_website, friends_work_history, manage_friendlists, friends_checkins, publish_stream, create_event, rsvp_event, sms, offline_access, publish_checkins, manage_pages'));
+}
+
+?>
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link href="/public/template/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/public/template/css/layout.css" rel="stylesheet" type="text/css" />
+<script src="/public/template/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script src="/public/template/js/cufon-yui.js" type="text/javascript"></script>
+<script src="/public/template/js/cufon-replace.js" type="text/javascript"></script>
+<script type="text/javascript" src="/public/template/js/Myriad_Pro_BoldItalic_700.font.js"></script>
+<script type="text/javascript" src="/public/template/js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="/public/template/js/jScrollPane.js"></script>
+<!--[if lt IE 7]><script type="text/javascript" src="http://info.template-help.com/files/ie6_warning/ie6_script_other.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="/public/template/js/html5.js" type="text/javascript"></script><![endif]-->
+<!--[if IE]><link href="/public/template/css/ie_style.css" rel="stylesheet" type="text/css" /><![endif]-->
+</head>
+<body>
+<div class="gwrap">
+  <div class="grass"></div>
+  <div class="inner-wrap">
+	<h1><a href="index.html"><img src="/public/template/images/wedvite_titlebar_logo.png"/></a></h1>
+    <ul class="soc">
+
+<!-- Facebook login button -->
+    <?php if ($me): ?>
+    <a href="<?php echo $logoutUrl; ?>">
+      <li><img src="http://static.ak.fbcdn.net/rsrc.php/z2Y31/hash/cxrz4k7j.gif"></a></li>
+      <li><a href="/events/list">Create a Wedding App</a></li>
+    <?php else: ?>
+<!--    <div>
+      Using JavaScript &amp; XFBML: <fb:login-button></fb:login-button>
+    </div>
+-->
+      <li>Login Via FaceBook:</li>
+      <li><a href="<?php echo $loginUrl; ?>">
+        <img src="http://static.ak.fbcdn.net/rsrc.php/zB6N8/hash/4li2k73z.gif"></a>
+	</li>
+    <?php endif ?>
+
+    </ul>
+
+
+
+
+
+    <!-- content -->
+    <dl id="content">
+      <dt class="frst">What is Wedvite?<span></span></dt>
+      <dd id="page1">
+        <div class="scroll"> <img src="/public/template/images/page1-img1.jpg" class="pr fl blo" alt=""> <img src="/public/template/images/page1-img2.jpg" class="fl" alt=""><br class="clear">
+		<p>Wedvite is an app for sharing your wedding with the ones you love.</p>
+        </div>
+      </dd>
+      <dt>How Does it work?<span></span></dt>
+      <dd id="page2">
+        <div class="scroll">
+          <div class="img-box-set blo">
+            <div class="border-bottom">
+              <dl>
+                <dt><img src="/public/template/images/page2-img1.jpg" alt=""></dt>
+                <dd>
+                  <p><a href="#" class="und">Step One</a><br>
+                    Login using your facebook account and start creating your wedding app</p>
+                </dd>
+              </dl>
+            </div>
+            <div class="border-bottom">
+              <dl>
+                <dt><img src="/public/template/images/page2-img2.jpg" alt=""></dt>
+                <dd>
+                  <p><a href="#" class="und">Step Two</a><br>
+                    Enter information in for this wedding such as; the wedding info on when and where, the location of the wedding.  Then you can write up something about you as a couple and about the 2 families.  You can also put in a list of gift registry you want to share with your guests and upload photos for them to enjoy.</p>
+                </dd>
+              </dl>
+            </div>
+            <dl>
+              <dt><img src="/public/template/images/page2-img3.jpg" alt=""></dt>
+              <dd>
+                <p><a href="#" class="und">Step Three</a><br>
+                  Start sharing your app!  You can do this by inviting them to download this app via facebook or you can email them with your app.  Your guests or guests that can't come can view everything you want to share with them before and during the wedding.  This app even allows your guest to upload photos they want to share with you right into the app.</p>
+              </dd>
+            </dl>
+	<!-- end of sections -->
+          </div>
+        </div>
+      </dd>
+<!-- Section -->
+<!--
+      <dt>Services &amp; Solutions<span></span></dt>
+      <dd id="page3">
+        <div class="scroll">
+          <div class="img-box-set t1 p1">
+            <dl>
+              <dt><img src="/public/template/images/page3-img1.jpg" alt=""></dt>
+              <dd><span class="blue">hendrerit mauris. Phasellus porta. Fusce suscipit variuset mi. Cum sociis natoque penatibus et.</span> <br>
+                Ridiculus mus. Nulla dui. Fusce feugiat malesuada odiMorbi nunc odio, gravida at, cursus nec, luhendre mauris sellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat.</dd>
+            </dl>
+          </div>
+          <p>parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a lorem. ultricies.</p>
+          <ul class="list fl pr blo">
+            <li><a href="#">Vestibulum iaculis lacinia est Proin dictum</a></li>
+            <li><a href="#">elementum velit Fusce euismod consequat</a></li>
+            <li><a href="#">ante Lorem ipsum dolor sit amet con-</a></li>
+            <li><a href="#">sectetuer adipiscing elit Pellentesque sed</a></li>
+            <li><a href="#">dolor Aliquam congue fermentum niMauris</a></li>
+          </ul>
+          <ul class="list fl">
+            <li><a href="#">Vestibulum iaculis lacinia est Proin dictum</a></li>
+            <li><a href="#">elementum velit Fusce euismod consequat</a></li>
+            <li><a href="#">ante Lorem ipsum dolor sit amet con-</a></li>
+            <li><a href="#">sectetuer adipiscing elit Pellentesque sed</a></li>
+            <li><a href="#">dolor Aliquam congue fermentum niMauris</a></li>
+          </ul>
+          <br class="clear">
+          <ul class="list fl pr blo">
+            <li><a href="#">Vestibulum iaculis lacinia est Proin dictum</a></li>
+            <li><a href="#">elementum velit Fusce euismod consequat</a></li>
+            <li><a href="#">ante Lorem ipsum dolor sit amet con-</a></li>
+            <li><a href="#">sectetuer adipiscing elit Pellentesque sed</a></li>
+            <li><a href="#">dolor Aliquam congue fermentum niMauris</a></li>
+          </ul>
+          <ul class="list fl">
+            <li><a href="#">Vestibulum iaculis lacinia est Proin dictum</a></li>
+            <li><a href="#">elementum velit Fusce euismod consequat</a></li>
+            <li><a href="#">ante Lorem ipsum dolor sit amet con-</a></li>
+            <li><a href="#">sectetuer adipiscing elit Pellentesque sed</a></li>
+            <li><a href="#">dolor Aliquam congue fermentum niMauris</a></li>
+          </ul>
+          <br class="clear">
+        </div>
+      </dd>
+-->
+<!-- Section -->
+<!--
+      <dt>Products<span></span></dt>
+      <dd id="page4">
+        <div class="scroll">
+          <div class="colum pr"> <img src="/public/template/images/page4-img1.jpg" alt="" class="blo">
+            <p><span class="blue">parturient montes</span><br>
+              nascetur ridiculus mui Nulla dui. Fusce feugiat malesuadu odio. Morbi nunc odiogravida at, cursus nec, luctus lorem. ultricies. pharetra magnate. Don accumsan.malesuadorci Donea eros. Lorem ipsum dolor seiamet. <a href="#">more</a></p>
+          </div>
+          <div class="colum pr"> <img src="/public/template/images/page4-img2.jpg" alt="" class="blo">
+            <p><span class="blue">Don accum muisan</span><br>
+              Ridiculus mui Nulla dui. Fusce fepharetra magnateDaccums
+              malesu adorci Donea eros. Lorem ipsum doloseiamet. ugiat malesuadu odio. Morbi nunc odiogravida at, cursus nec, luctus lorem. ultricies. pharetra magn. <a href="#">more</a> </p>
+          </div>
+          <div class="colum blo"> <img src="/public/template/images/page4-img3.jpg" alt="" class="blo">
+            <p><span class="blue">luctus loremult.</span><br>
+              Fusce fep ha retra magDaccu malesu adorci Donea eros. Lorem ipsum doloseiamet. ugiat malesuadu odio. Morbi nunc odiogravida at, cursus nec, luctus lorem. ultricies. pharetra magna  cumsan mal esuadorci Do. <a href="#">more</a></p>
+          </div>
+          <br class="clear">
+          <div class="colum pr"> <img src="/public/template/images/page4-img1.jpg" alt="" class="blo">
+            <p><span class="blue">parturient montes</span><br>
+              nascetur ridiculus mui Nulla dui. Fusce feugiat malesuadu odio. Morbi nunc odiogravida at, cursus nec, luctus lorem. ultricies. pharetra magnate. Don accumsan.malesuadorci Donea eros. Lorem ipsum dolor seiamet. <a href="#">more</a></p>
+          </div>
+          <div class="colum pr"> <img src="/public/template/images/page4-img2.jpg" alt="" class="blo">
+            <p><span class="blue">Don accum muisan</span><br>
+              Ridiculus mui Nulla dui. Fusce fepharetra magnateDaccums
+              malesu adorci Donea eros. Lorem ipsum doloseiamet. ugiat malesuadu odio. Morbi nunc odiogravida at, cursus nec, luctus lorem. ultricies. pharetra magn. <a href="#">more</a> </p>
+          </div>
+          <div class="colum"> <img src="/public/template/images/page4-img3.jpg" alt="" class="blo">
+            <p><span class="blue">luctus loremult.</span><br>
+              Fusce fep ha retra magDaccu malesu adorci Donea eros. Lorem ipsum doloseiamet. ugiat malesuadu odio. Morbi nunc odiogravida at, cursus nec, luctus lorem. ultricies. pharetra magna  cumsan mal esuadorci Do. <a href="#">more</a></p>
+          </div>
+          <br class="clear">
+        </div>
+      </dd>
+-->
+<!-- Section -->
+      <dt class="last">App Demo<span></span></dt>
+      <dd id="page5">
+        <div class="color-wrap">
+          <div class="scroll">
+          </div>
+        </div>
+      </dd>
+    </dl>
+    <ul class="pop-up-blocks">
+      <li class="privacy"><a href="#" class="close"><img src="/public/template/images/close.png" alt=""></a>
+        <h2>Privacy Policy</h2>
+        <div class="scroll">
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociinatoque penatibus et magnis dis parturient  montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec.</p>
+          <p>Luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummyhendrerit mauris. Phasellus porta. Fusce suscipit.magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum .</p>
+          <p>Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, conseetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. </p>
+          <p>Aliquam erat volutpat. Duis ac turpis. Integer rutrum ante eu lacus. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Rorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociinatoque.</p>
+          <p>penatibus et magnis dis parturient  montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec.Luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummyhendrerit mauris. Phasellus porta. Fusce suscipit.Maecenas tristique orci ac sem. </p>
+          <p class="p3"><a href="#">privacy@demolink.org</a></p>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociinatoque penatibus et magnis dis parturient  montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec.</p>
+          <p>Luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummyhendrerit mauris. Phasellus porta. Fusce suscipit.magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum .</p>
+          <p>Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, conseetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. </p>
+          <p>Aliquam erat volutpat. Duis ac turpis. Integer rutrum ante eu lacus. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Rorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociinatoque.</p>
+          <p>penatibus et magnis dis parturient  montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec.Luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummyhendrerit mauris. Phasellus porta. Fusce suscipit.Maecenas tristique orci ac sem. </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- footer -->
+  <footer>
+    <div class="inner-wrap">
+      <pre class="privacy und nocolor">cliney &copy; 2010 | <a href="#privacy">Privacy Policy</a>		<!-- {%FOOTER_LINK} --></pre>
+    </div>
+  </footer>
+</div>
+<script type="text/javascript"> Cufon.now();
+var expand=function(){
+	if(~this.className.indexOf('active'))return colapse.call(this)
+	var th=$(this),next=th.next(),ex=next.siblings('dd.expand')
+	th.addClass('active')
+	next.show().stop().addClass('expand').css({height:0}).animate({height:'383px'},{
+		step:function(cu){
+			if(ex.length)ex.stop().height(~~((383-cu)/ex.length)+1+'px')
+		},
+		complete:function(){
+			next.siblings('dd').removeClass('expand').height(0)
+			next.addClass('expand')
+			th.siblings().removeClass('active')
+		}
+	})
+},colapse=function(){
+	var th=$(this)
+	th.next().stop().animate({height:0},function(){
+		th.removeClass('active')
+		$(this).removeClass('expand')
+	})
+}
+$(window).load(function(){
+	$('#content,.pop-up-blocks').show()
+	$('#content>dt').live('click',expand)
+	$('.privacy a[href=#privacy]').live('click',function(){
+		$('.pop-up-blocks .privacy').fadeIn()
+		return false
+	})
+	$('.pop-up-blocks a.close').live('click',function(){
+		$(this).parent().fadeOut()
+		return false
+	})
+	
+	$('#content>dd').show()
+	$('.scroll').jScrollPane({
+		showArrows:false,
+		scrollbarWidth:20,
+		dragMaxHeight:122
+	})
+	$('#content>dd,.pop-up-blocks>li').hide()
+})
+</script>
+<!--coded by pleazkin-->
+</body>
+</html>

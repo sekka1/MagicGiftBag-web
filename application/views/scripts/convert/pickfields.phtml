@@ -1,0 +1,222 @@
+<?php
+////////////////////
+//Pick Field List
+
+$field_picker_list = '<option value="not used">Not used</option>';
+$field_picker_list .= '<option value="version">version</option>';
+$field_picker_list .= '<option value="name">name</option>';
+$field_picker_list .= '<option value="sourceIP">sourceIP</option>';
+$field_picker_list .= '<option value="destIP">destIP</option>';
+$field_picker_list .= '<option value="srcPort">srcPort</option>';
+$field_picker_list .= '<option value="destPort">destPort</option>';
+$field_picker_list .= '<option value="igmpStatus">igmpStatus</option>';
+$field_picker_list .= '<option value="alarmTemplate">alarmTemplate</option>';
+$field_picker_list .= '<option value="VLANTCI">VLANCTI</option>';
+$field_picker_list .= '<option value="payloadTemplate">payloadTemplate</option>';
+$field_picker_list .= '<option value="srcIpMask">srcIpMask</option>';
+$field_picker_list .= '<option value="destIpMask">destIpMask</option>';
+$field_picker_list .= '<option value="Broadcast">Broadcast</option>';
+$field_picker_list .= '<option value="MACforARPReply">MACforARPReply</option>';
+$field_picker_list .= '<option value="channelNumber">channelNumber</option>';
+$field_picker_list .= '<option value="channelName">channelName</option>';
+$field_picker_list .= '<option value="channelAliasNumber">channelAliasNumber (PID)</option>';
+$field_picker_list .= '<option value="deviceRef">deviceRef</option>';
+$field_picker_list .= '<option value="channelOffPeriod">channelOffPeriod</option>';
+$field_picker_list .= '<option value="channelOffAirTemplate">channelOffAirTemplate</option>';
+$field_picker_list .= '<option value="RTP SSRC">RTP SSRC</option>';
+$field_picker_list .= '<option value="IGMP Sets">IGMP Sets</option>';
+$field_picker_list .= '<option value="Ports">Ports</option>';
+$field_picker_list .= '<option value="eia">EIA- QAM</option>';
+
+// This array is used for printing out the column header letter so user can identify it
+$alpha_list_array = array( 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'aa', 'ab', 'ac', 'ad' );
+
+// Adding fluff to the $alpha_list_array array
+for( $i=0; $i < 1000; $i++){
+	array_push( $alpha_list_array, 'X' );
+}
+
+////////////////////
+
+echo 'This page lets you map what you have in your Excel spreadsheet(s) to what the Alias File fields needs.<br/>At the minimun you need to use these 6 fields: channelName, channelAliasNumber, destPort, destIP, channelNumber.  <br/>You have the option of using a source IP for each sheet.<br/><br/>';
+
+echo 'The "Name of the Flows" parameter is very important.  This is what all your flows will be named and each unique flow has to have <br/>a unique name or else it will think it is in the same flow.  This parameter is applied to all the sheets.  It allows you to make the flow <br/>names with the combination of each row\'s cell and a delimiter.<br/><br/>';
+
+echo '<form action="/convert/processfields/auth/videomonitoring/type/'.$this->type.'" method="POST">';
+echo '<input type="submit" name="submit" value="submit"/><br/>';
+
+// Output Options
+echo '<table class="generic">';
+echo '<tr><td>Output to:</td><td><input type="radio" name="output_to" value="raw">Raw<input type="radio" name="output_to" value="file">File</td></tr>';
+echo '<tr><td>File Name:</td><td><input type="text" name="file_name"></td></tr>';
+echo '</table>';
+echo '<br/>';
+
+// Fields for the Transport Alarm Templates searching and replacing
+echo '<table class="generic">';
+echo '<tr><td colspan="2">Alarm Template Search and Replace</td></tr>';
+echo '<tr><td>1) Transport Alarm Template Search String:<input type="text" name="transport_alarmtemplate_search_1"/></td>';
+echo '<td>Set Template to:<input type="text" name="transport_alarmtemplate_set_1"/></td></tr>';
+echo '<tr><td>2) Transport Alarm Template Search String:<input type="text" name="transport_alarmtemplate_search_2"/></td>';
+echo '<td>Set Template to:<input type="text" name="transport_alarmtemplate_set_2"/></td></tr>';
+// Field for the Program Alarm Template searching and replacing
+echo '<tr><td>1) Program Alarm Template Search String:<input type="text" name="program_alarmtemplate_search_1"/></td>';
+echo '<td>Set Template to:<input type="text" name="program_alarmtemplate_set_1"/></td></tr>';
+echo '<tr><td>2) Program Alarm Template Search String:<input type="text" name="program_alarmtemplate_search_2"/></td>';
+echo '<td>Set Template to:<input type="text" name="program_alarmtemplate_set_2"/></td></tr>';
+echo '</table>';
+
+echo '<br/><br/>';
+
+// Name to use for flows.  Allow users to use a column or combined a column
+echo '<table class="generic"><tr><td>Name of the Flows: ';
+
+// Print out the drop down list for column selection for the naming for flows
+for( $i=1; $i<=7; $i++ ){
+
+	echo '<select name="flowname_'.$i.'">
+		<option value="not used">Not Used</option>
+		<option value="sheet">Sheet Name</option>';
+
+	foreach( $alpha_list_array as $val){
+
+		echo '<option value="' . $val . '">Column ' . $val . '</option>';
+
+	}               
+
+	echo '</select> <input type="text" name="flow_cat_'.$i.'" size="4"/>  ';
+
+}
+
+echo "</tr></table>";
+
+$print_name_selector = 1;
+
+echo '</table>';
+echo '<br/><br/>';
+echo '<input type="hidden" name="filename" value="' . $this->filename . '"/>';
+
+//echo '<table border=1>';
+
+$new_sheet = true; // Mark as the first itteration of the sheet.  Reset value at the end of sheet.
+$sheet_count = 0; // Keep track of the sheet number
+$print_name_selector = 0; // Only print this once in the loop below so this flag is set to off later
+$row_print_limit = 20; // Controls how many rows to print out
+
+// Loop through the excel array to print out the values
+foreach( $this->sheets as $aSheet ){
+	// Loop through each sheet
+
+	//echo '<table border=1 bgcolor="grey">';
+	echo '<table class="generic">';
+
+	// Print out field picker header if it is the first loop through the sheet
+	if( $new_sheet ){
+	
+		// Print out Sheet name
+		echo "<tr>";
+
+		echo '<td colspan=' . $aSheet['numRows'] . '><b>Sheet Name: ' . $this->boundsheets[$sheet_count]['name'] . '</b><select name="use_sheet_' . $sheet_count . '"><option value="false">Not Used</option><option value="true">Use Sheet</option></select></td>';
+
+		echo "</tr>";
+
+		// Name to use for flows.  Allow users to use a column or combined a column
+/*		if( $print_name_selector == 0 ){
+
+			echo '<tr><td colspan="' . $aSheet['numRows'] . '">Name of the Flows: ';
+
+			// Print out the drop down list for column selection for the naming for flows
+			for( $i=1; $i<=7; $i++ ){
+
+				echo '<select name="flowname_'.$i.'">
+					<option value="not used">Not Used</option>
+					<option value="sheet">Sheet Name</option>';
+	
+				foreach( $alpha_list_array as $val){
+
+					echo '<option value="' . $val . '">Column ' . $val . '</option>';
+
+				}		
+
+				echo '</select> <input type="text" name="flow_cat_'.$i.'" size="4"/>  ';
+
+			}
+
+			echo "</tr>";
+
+			$print_name_selector = 1;
+		}
+*/
+		// Allow user to choose if there will be a source IP and source port or not
+                echo '<tr><td colspan="4">Use Source IP and Source Port?
+			<select name="usermapfield_sheet-' . $sheet_count . '_usesource">
+				<option value="yes">Yes</option><option SELECTED value="no">No</option>
+			</select>
+			</td></tr>';
+
+		// Print out field pickers
+		echo "<tr><td>Header?</td>";
+
+		// Output the drop down list on top of each column that lets the user pick what this column is
+		// mapped to the alias files headers
+		for( $i = 1; $i <= $aSheet['numCols']; $i++){
+
+			echo '<td><select name="usermapfield_sheet-' . $sheet_count . '_field-' . $i . '">';
+			echo $field_picker_list;
+			echo '</select></td>';
+		}
+
+		echo "</tr><tr><td>Colunms</td>";
+
+		// print out column alpha characters
+		for( $i=0; $i < $aSheet['numCols']; $i++){
+
+			echo '<td>' . $alpha_list_array[$i] . '</td>';
+		}
+
+		echo "</tr>";
+
+		// Change the flag so all the header stuff doesnt print out again
+		$new_sheet = false;
+	}
+
+//		echo "numRows: " . $aSheet['numRows'] . "<br/>";
+//                echo "numCols: " . $aSheet['numCols'] . "<br/>";
+//		echo "-------------<br/>";
+
+	for( $r = 1; ($r < $aSheet['numRows']) && ($r < $row_print_limit); $r++){
+	// Looping through each row
+
+		// Check if this row exist in the array
+		if( isset( $aSheet['cells'][$r] ) ){
+
+			echo '<tr><td><input type="checkbox" name="header_sheet-'. $sheet_count .'_r-'. $r .'"/>';
+
+			for( $c = 1; $c <= $aSheet['numCols']; $c++ ){
+			// Looping through each cell in the row
+
+				// Check if this cell is set before using
+				if( isset( $aSheet['cells'][$r][$c] ) ){
+					echo "<td>" . $aSheet['cells'][$r][$c] . "</td>";
+				} else {
+				// Output a blank cell
+	
+					echo "<td></td>";
+
+				}
+			}
+
+			echo "<tr/>";
+		}
+	}
+
+	echo "</table><br/><br/>";
+
+	$new_sheet = true; // Reset this var so next run it prints out the headers also
+	$sheet_count++;
+}
+
+
+	echo '<input type="submit" name="submit" value="submit"/>';
+	echo "</form>";
+?>

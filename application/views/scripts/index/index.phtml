@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Magic GiftBag</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="public/slider/images/apple-touch-icon.png">
+
+	<!-- jQuery (required) -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+
+	<link rel="stylesheet" href="public/slider/css/page.css">
+
+        <link rel="stylesheet" href="public/gift/style.css">
+
+	<!-- Anything Slider -->
+	<link rel="stylesheet" href="public/slider/css/anythingslider.css">
+	<script src="public/slider/js/jquery.anythingslider.js"></script>
+
+	<!-- AnythingSlider optional extensions -->
+	<!-- <script src="js/jquery.anythingslider.fx.js"></script> -->
+	<!-- <script src="js/jquery.anythingslider.video.js"></script> -->
+
+	<!-- Define slider dimensions here -->
+	<style>
+	#slider { width: 320px; height:480px; }
+	</style>
+
+	<!-- AnythingSlider initialization -->
+	<script>
+		// DOM Ready
+		$(function(){
+			$('#slider').anythingSlider({
+                            startPanel:1,
+                            buildNavigation:false,
+                            autoPlay:true
+                        });
+		});
+	</script>
+
+	<!-- Older IE stylesheet, to reposition navigation arrows, added AFTER the theme stylesheet -->
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" href="css/anythingslider-ie.css" type="text/css" media="screen" />
+	<![endif]-->
+
+<!-- Google + One -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+<!-- Facebook Like -->
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=146836712079037";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</head>
+
+<body id="simple">
+
+    <div id="fb-root"></div>
+
+     <div id="header">
+            <p class="header"><img clas="header" src="http://www.magicgiftbag.com/public/gift/img/MGB-AppIcon57.png"/>&nbsp;&nbsp;Magic GiftBag</p>
+    </div>
+
+    <div id="container">
+
+        <div id="leftside">
+
+            <h2>Help find a gift for a friend easily!</h2>
+
+            <p class="maintext">Magic Giftbag analyzes your friend's personalities to suggest multiple gifts that your friends will love. For more information on a gift just click on it to find the cheapest prices online, read reviews and securely purchase your gift!</p>
+
+            <!--Apple App Store button-->
+            <a href="http://itunes.apple.com/us/app/magic-gift-bag/id476857607?ls=1&mt=8"><img src="http://www.magicgiftbag.com/public/gift/img/appstore.gif"/></a>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <!--Android Button-->
+            <a href="https://market.android.com/details?id=com.magicgiftbag.magicgiftbag"><img src="http://www.magicgiftbag.com/public/gift/img/android.gif"/></a>
+
+            <br/><br/><br/>
+
+            <!--FB Like-->
+            <a class="fblink" href="http://www.facebook.com/apps/application.php?id=146836712079037">Visit us on Facebook</a><br/>
+            <div class="fb-like" data-href="http://www.magicgiftbag.com/" data-send="true" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <!--Google +1-->
+            <div class="g-plusone"></div>
+
+        </div>
+
+        <div id="rightside">
+
+    	        <!-- Simple AnythingSlider -->
+
+	        <ul id="slider">
+
+		    <li><img src="public/slider/images/login.png" alt=""></li>
+
+		    <li><img src="public/slider/images/friends.png" alt=""></li>
+
+		    <li><img src="public/slider/images/Find-Gifts.png" alt=""></li>
+
+		    <li><img src="public/slider/images/products.png" alt=""></li>
+
+                    <li><img src="public/slider/images/iten.png" alt=""></li>
+
+	        </ul>
+
+	        <!-- END AnythingSlider -->
+    
+        </div>
+
+    </div>
+
+</body>
+
+</html>

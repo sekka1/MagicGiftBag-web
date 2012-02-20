@@ -1,0 +1,22 @@
+<?php
+
+if( $this->doesBelong ){
+
+	echo '<b>Creation</b><br/>';
+	echo '<a href="/eventinfo/edit/id/'.$this->event_id_seq.'">Set Event Info</a><br/>';
+	echo '<a href="/template/edit/id/'.$this->event_id_seq.'">Choose Template</a><br/>';
+	echo '<a href="/photosowners/uploadform/id/'.$this->event_id_seq.'">Upload Photos</a><br/>';
+	echo '<a href="/videos/index/id/'.$this->event_id_seq.'">Upload Videos</a><br/>';
+	echo '<a href="/arbitrarypage/list/id/'.$this->event_id_seq.'">List Arbitrary Page</a><br/>';
+	echo '<a href="/invite/facebook/id/'.$this->event_id_seq.'">Invite FB Friends to this Wedding</a><br/>';
+	echo 'add RSS feed';
+
+	echo '<br/><br/><b>View App</b><br/>';
+	echo '-how home screen will look like<br/>';
+	echo '-view photo album<br/>';
+	echo '-view video album<br/>';
+} else {
+
+	echo 'dont be naughty';
+}
+?>

@@ -1,0 +1,116 @@
+<html>
+<head>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/public/rating/styles.css">
+
+<script language="javascript">
+function vote(rating,id_seq){
+    $.ajax({
+        type: "GET",
+        url: '/data/index/class/Ratings/method/rate/id_seq/'+id_seq+'/rate/'+rating,
+        //data: "item_id=12345&vote=" amnt,
+        dataType: "json",
+        success: function(res, id_seq){
+            alert('hi');
+            $('#current-rating').width(res.width);
+            $('#current-rating-result').html(res.status);
+        }
+    });
+}
+</script>
+
+</head>
+<body>
+<?php
+
+//
+// Get this user's ratings
+//
+$rating_url = "http://www.magicgiftbag.com/data/index/class/Crud/method/read/tableName/Ratings/whereKey/user_id/whereValue/566708666/accessToken/" . $this->facebook->getAccessToken();
+
+$resultsRatings = file_get_contents( $rating_url );
+$resultsRatings_decoded = json_decode( $resultsRatings, 1 );
+
+//
+// Get the categories name
+//
+$parentId = 0; // 0 = root node
+$currentID = $this->currentId;
+
+if( $this->parentId != '' )
+    $parentId = $this->parentId;
+if( $currentID == '' )
+    $currentID = 0;
+
+$get_url = "http://www.magicgiftbag.com/data/index/class/Crud/method/read/tableName/Items/whereKey/parent_id_seq/whereValue/".$parentId."/accessToken/" . $this->facebook->getAccessToken();
+
+//echo $get_url.'<br/>';
+
+// Get this node's content
+$results = file_get_contents( $get_url );
+$result_decoded = json_decode( $results, 1 );
+//print_r( $result_decoded );
+
+// Back link
+echo '<a href="/ratings/rate/parentID/'.$currentID.'">Back</a><br/>';
+
+// Print out this node
+echo '<table border="1">';
+echo '<tr>
+        <td>Name</td>
+        <td>Rating</td>
+        <td>Description</td>
+    </tr>';
+
+foreach( $result_decoded as $anItem ){
+
+    $ratingScore = 0;
+
+    // Get rating for this item
+    foreach( $resultsRatings_decoded as $aUsersItem ){
+
+        if( $aUsersItem['items_id_seq'] == $anItem['id_seq'] )
+                $ratingScore = $aUsersItem['rating'] * 25;
+    } 
+
+    echo '<tr>';
+
+    echo '<td><a href="/ratings/rate/parentID/'.$anItem['id_seq'].'/currentID/'.$parentId.'">' . $anItem['name'] . '</a></td>';
+
+    echo '<td>
+        <ul class="star-rating">
+    <li class="current-rating" id="current-rating-'.$anItem['id_seq'].'" style="width: '.$ratingScore.'px"></li>
+    <li><a href="#" onclick="vote(1,'.$anItem['id_seq'].'); return false;" 
+           title="1 star out of 5" class="one-star">1</a></li>
+    <li><a href="#" onclick="vote(2,'.$anItem['id_seq'].'); return false;" 
+           title="2 star out of 5" class="two-stars">2</a></li>
+    <li><a href="#" onclick="vote(3,'.$anItem['id_seq'].'); return false;" 
+           title="3 star out of 5" class="three-stars">3</a></li>
+    <li><a href="#" onclick="vote(4,'.$anItem['id_seq'].'); return false;" 
+           title="4 star out of 5" class="four-stars">4</a></li>
+    <li><a href="#" onclick="vote(5,'.$anItem['id_seq'].'); return false;" 
+           title="5 star out of 5" class="five-stars">5</a></li>
+</ul>
+<div id="current-rating-result"></div> <!-- used to show "success" message after vote -->
+
+        </td>';
+
+    echo '<td>' . $anItem['description']. '</td>';
+
+    echo '</tr>';
+}
+
+echo '</table>';
+
+?>
+
+<!-- ADD Item -->
+<br/><br/>This link you can add an item or category to this level:
+<a href="/ratings/add/parent_id_seq/<?php echo $parentId; ?>">Add Item</a><br/>
+
+
+
+</body>
+</html>

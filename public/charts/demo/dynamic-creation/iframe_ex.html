@@ -1,0 +1,76 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>CodeThatCalendar in the Frame</title>
+<meta http-equiv="content-language" content=en>
+<meta name=robots content="DISALLOW">
+<meta http-equiv=expires content="Mon, 01 Jan 1990 00:00:00 GMT">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv=pragma content="no-cache">
+<meta name="revisit-after" content="1 day">
+<meta http-equiv="content-script-type" content="text/javascript">
+<link rel=stylesheet type="text/css" href="s.css">
+
+<script language="javascript1.2" src="../Scripts/codethatcalendarstd.js"></script><script language="javascript1.2" src="iframe_ex.js"></script></head>
+<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor=#FFFFFF>
+<p class=cp22><a href="http://www.codethat.com/"><img src="img/logo.gif" width=148 height=40 border=0 alt="CodeThat.com"></a></p>
+<p class=cp25><font class=cf5>CodeThatCalendar in the Frame</font></p><script language="javascript1.2">
+<!--
+var c1 = new CodeThatCalendar(caldef1);
+if (ua.oldOpera)document.write("<div id=\"calendar_div\">");
+document.write("<iframe id=\"calendar_frame\" name=\"calendar_frame\"");
+document.write(" frameborder=\"0\"");
+document.write(" scrolling=\"no\"");
+document.write(" style=\"visibility:hidden;\"");
+if (ua.oldOpera)document.write(" src=\"calendar/codethatcalendar.html\">");
+else document.write(">");
+document.write("</iframe>");
+if (ua.oldOpera)document.write("</div>");
+//-->
+</script>
+
+<p class=cp10>Month+year scrollers. Calendar in the frame.</p>
+<form>
+<p class=cp10><input class=ci3 name=id1 type=textarea/> &nbsp;
+<input class=ci4 type=button onclick="c1.innerpopup('id1','calendar_frame');" value="..."/></p>
+</form>
+
+<pre class=cc1>
+<font class=cc3><font class=cc5>var</font> caldef1 <font class=cc2>=</font> <font class=cc7>{</font>
+	firstday <font class=cc2>:</font> <font class=cc4>0</font><font class=cc2>,</font></font> // First day of the week: 0 means Sunday, 1 means Monday, etc.
+	<font class=cc3>dtype <font class=cc2>:</font></font> <font class=cc6>'MM/dd/yyyy'</font><font class=cc2>,</font> // Output date format MM-month, dd-date, yyyy-year,
+	                      // HH-hours, mm-minutes, ss-seconds
+	<font class=cc3>width <font class=cc2>:</font> <font class=cc4>250</font><font class=cc2>,</font></font> // Width of the calendar table
+	<font class=cc3>windoww <font class=cc2>:</font> <font class=cc4>300</font><font class=cc2>,</font></font> // Width of the calendar window
+	<font class=cc3>windowh <font class=cc2>:</font> <font class=cc4>200</font><font class=cc2>,</font></font> // Height of the calendar window
+	<font class=cc3>border_width <font class=cc2>:</font> <font class=cc4>0</font><font class=cc2>,</font></font> // Border of the table
+	<font class=cc3>border_color <font class=cc2>:</font></font> <font class=cc6>'#ffffff'</font><font class=cc2>,</font> // Color of the border
+	<font class=cc3>dn_css <font class=cc2>:</font></font> <font class=cc6>'clsDayName'</font><font class=cc2>,</font> // CSS for week day names
+	<font class=cc3>cd_css <font class=cc2>:</font></font> <font class=cc6>'clsCurrentDay'</font><font class=cc2>,</font> // CSS for current day
+	<font class=cc3>tw_css <font class=cc2>:</font></font> <font class=cc6>'clsCurrentWeek'</font><font class=cc2>,</font> //  CSS for current week
+	<font class=cc3>wd_css <font class=cc2>:</font></font> <font class=cc6>'clsWorkDay'</font><font class=cc2>,</font> // CSS for work days (this month)
+	<font class=cc3>we_css <font class=cc2>:</font></font> <font class=cc6>'clsWeekEnd'</font><font class=cc2>,</font> // CSS for weekend days (this month)
+	<font class=cc3>wdom_css <font class=cc2>:</font></font> <font class=cc6>'clsWorkDayOtherMonth'</font><font class=cc2>,</font> // CSS for work days (other month)
+	<font class=cc3>weom_css <font class=cc2>:</font></font> <font class=cc6>'clsWeekEndOtherMonth'</font><font class=cc2>,</font> // CSS for weekend days (other month)
+	<font class=cc3>wdomcw_css <font class=cc2>:</font></font> <font class=cc6>'clsWorkDayOthMonthCurWeek'</font><font class=cc3><font class=cc2>,</font>
+	weomcw_css <font class=cc2>:</font></font> <font class=cc6>'clsWeekEndOthMonthCurWeek'</font><font class=cc3><font class=cc2>,</font>
+	wecd_css <font class=cc2>:</font></font> <font class=cc6>'clsWeekEndCurDay'</font><font class=cc3><font class=cc2>,</font>
+	wecw_css <font class=cc2>:</font></font> <font class=cc6>'clsWeekEndCurWeek'</font><font class=cc3><font class=cc2>,</font>
+	highlight_css <font class=cc2>:</font></font> <font class=cc6>'clsHighLight'</font><font class=cc3><font class=cc2>,</font>
+	headerstyle <font class=cc2>:</font> <font class=cc7>{</font>
+		type <font class=cc2>:</font></font> <font class=cc6>'buttons'</font><font class=cc2>,</font> // Type of the header may be: 'buttons' or 'comboboxes'
+		<font class=cc3>css <font class=cc2>:</font></font> <font class=cc6>'clsDayName'</font><font class=cc2>,</font> // CSS for header
+		<font class=cc3>imgnextm <font class=cc2>:</font></font> <font class=cc6>'forward.jpg'</font><font class=cc2>,</font> // Image for next month button.
+		<font class=cc3>imgprevm <font class=cc2>:</font></font> <font class=cc6>'back.jpg'</font><font class=cc2>,</font> // Image for previous month button.
+		<font class=cc3>imgnexty <font class=cc2>:</font></font> <font class=cc6>'forward.jpg'</font><font class=cc2>,</font> // Image for next year button.
+		<font class=cc3>imgprevy <font class=cc2>:</font></font> <font class=cc6>'back.jpg'</font> // Image for previous year button.
+	<font class=cc7>}</font><font class=cc2>,</font>
+	// Array with month names
+	<font class=cc3>monthnames <font class=cc2>:</font> <font class=cc8>[</font></font><font class=cc6>"January"</font><font class=cc2>,</font> <font class=cc6>"February"</font><font class=cc2>,</font> <font class=cc6>"March"</font><font class=cc2>,</font> <font class=cc6>"April"</font><font class=cc2>,</font> <font class=cc6>"May"</font><font class=cc2>,</font> <font class=cc6>"June"</font><font class=cc2>,</font> <font class=cc6>"July"</font><font class=cc2>,</font> <font class=cc6>"August"</font><font class=cc2>,</font> <font class=cc6>"September"</font><font class=cc2>,</font> <font class=cc6>"October"</font><font class=cc2>,</font> <font class=cc6>"November"</font><font class=cc2>,</font> <font class=cc6>"December"</font><font class=cc8>]</font><font class=cc2>,</font>
+	// Array with week day names
+	<font class=cc3>daynames <font class=cc2>:</font> <font class=cc8>[</font></font><font class=cc6>"Su"</font><font class=cc2>,</font> <font class=cc6>"Mo"</font><font class=cc2>,</font> <font class=cc6>"Tu"</font><font class=cc2>,</font> <font class=cc6>"We"</font><font class=cc2>,</font> <font class=cc6>"Th"</font><font class=cc2>,</font> <font class=cc6>"Fr"</font><font class=cc2>,</font> <font class=cc6>"Sa"</font><font class=cc3><font class=cc8>]</font><font class=cc2>,</font>
+	template_path <font class=cc2>:</font></font> <font class=cc6>'calendar/'</font><font class=cc3><font class=cc2>,</font>
+	img_path <font class=cc2>:</font></font> <font class=cc6>'img/'</font>
+<font class=cc7>}</font><font class=cc2>;</font> 
+</pre>
+
+</body></html>

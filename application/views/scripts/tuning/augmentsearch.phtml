@@ -1,0 +1,41 @@
+<?php
+echo '<h3>Augment Word Manipulation - Search Term</h3>';
+echo '<p>This is to manipulate the search term.  There are a lot of times when the search term "travelling" brings back weird results.  This functionality is here to augment that so that we can find that word and then either change it or add more words to the search term.';
+
+
+//print_r( $this->listContent );
+
+echo '<form action="/tuning/augmentsearch" method="post">';
+echo '<input type="hidden" name="webAction" value="add_searchTerm"/>';
+echo '<input type="text" name="orig_text" value="original text"/>';
+echo '<input type="text" name="change_to" value="change to"/>';
+echo '<input type="submit" name="submit" value="add"/>';
+echo '</form>';
+
+echo '</form>';
+
+
+echo '<table border="1">';
+echo '<tr>
+        <td>Original Text</td>
+        <td>Change to..</td>
+        <td>Delete</td>';
+
+$aCount = 0;
+
+foreach( $this->listContent as $aContent ){
+
+    echo '<tr>';
+    echo '<td><a href="http://www.magicgiftbag.com/gift/searchtest/numberOfItems/20/searchIndex/1/priceRange/[1,1000]/q/' . $aContent['orignal_text'] . '">' . $aContent['orignal_text'] . '</td>';
+    echo '<td><a href="http://www.magicgiftbag.com/gift/searchtest/numberOfItems/20/searchIndex/1/priceRange/[1,1000]/q/' . $aContent['change_to'] . '">' . $aContent['change_to'] . '</td>';;
+    echo '<td><a href="/tuning/augmentsearch/webAction/delete/spot/'.$aCount.'">Delete</a></td>';
+    echo '</tr>';    
+
+    $aCount++;
+}
+
+echo '</table>';
+
+
+
+?>

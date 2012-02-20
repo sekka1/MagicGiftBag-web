@@ -1,0 +1,74 @@
+<!doctype html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
+  <head>
+    <title>Friends Lists</title>
+    <style>
+      body {
+        font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
+      }
+      h1 a {
+        text-decoration: none;
+        color: #3b5998;
+      }
+      h1 a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+
+<?php
+
+$user = $this->facebook->api( '/me' );
+
+$users_likesList;
+
+if ($user){
+// User is logged in
+
+        try {
+
+            // Show this friend's profile pic
+            echo '<br/><br/><img src="https://graph.facebook.com/' . $this->user_id . '/picture"><br/><br/>';
+
+            // Show this friend's user's info
+            $friends_info = $this->facebook->api('/' . $this->user_id );
+
+            echo '<h3>User Info</h3>';
+            print_r( $friends_info );
+            echo '<br/><br/>';
+
+            echo '<h3>Amazon Search Results</h3>';
+            foreach( $this->displayResults as $aResult ){
+
+                echo '<h5>Item: ' . $aResult['ItemAttributes']['Title'] . '</h5>';
+                echo '<p>Price: ' . $aResult['OfferSummary']['LowestNewPrice']['FormattedPrice'] . '<p/>';
+
+                if( isset( $aResult['Offers']['Offer']['OfferListing']['AvailabilityAttributes']['AvailabilityType'] ) )
+                    echo '<p>Availability: ' . $aResult['Offers']['Offer']['OfferListing']['AvailabilityAttributes']['AvailabilityType'] . ' - ' . $aResult['Offers']['Offer']['OfferListing']['Availability'] . '<p/>';
+    
+                if( isset( $aResult['Offers']['MoreOffersUrl'] ) )
+                    echo '<p>More Offers: <a href="' . $aResult['Offers']['MoreOffersUrl'] . '">More Offers</a></p>';
+        
+                if( isset( $aResult['MediumImage']['URL'] ) )
+                    echo '<img src="' . $aResult['MediumImage']['URL'] . '"/>';
+                elseif( isset( $aResult['ImageSets']['ImageSet']['MediumImage']['URL'] ) )
+                    echo '<img src="' . $aResult['ImageSets']['ImageSet']['MediumImage']['URL'] . '"/>';
+
+
+                echo '<a href="' . $aResult['DetailPageURL'] . '">Item Link</a>';
+
+                echo '<hr />';
+            }
+
+        } catch (FacebookApiException $e) {
+                error_log($e);
+        }
+
+} // User is logged in
+
+
+?>
+  </body>
+</html>
+

@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
+  <head>
+    <title>Friends Lists</title>
+    <style>
+      body {
+        font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
+      }
+      h1 a {
+        text-decoration: none;
+        color: #3b5998;
+      }
+      h1 a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+
+<?php
+
+
+    if( ! isset( $this->searchResult['error'] ) ){
+
+        echo '<h3>Amazon Search Results</h3>';
+        foreach( $this->searchResult as $aResult ){
+
+            echo '<h5>Item: ' . $aResult['title'] . '</h5>';
+            echo '<p>Price: ' . $aResult['price'] . '<p/>';
+
+            echo '<img src="' . $aResult['img_medium'] . '"/>';
+
+            echo '<a href="' . $aResult['item_url'] . '">Item Link</a>';
+
+            echo '<hr />';
+        }
+    } else {
+        echo $this->searchResult['error'] . '<br/><br/>';
+    }
+
+?>
+</body>
+</html>
+

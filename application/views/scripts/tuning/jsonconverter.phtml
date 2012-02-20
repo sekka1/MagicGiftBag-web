@@ -1,0 +1,13 @@
+<?php
+
+echo $this->list;
+
+?>
+
+Feed it a comman separated list.  There has to be a comma after each word/phrase even thought it is on a new line.  Then it will print out the json that can be put into the 
+Persona engine
+
+<form action="/tuning/jsonconverter" method="post">
+<textarea name="list"></textarea><br/>
+<input type="submit"/>
+</form>

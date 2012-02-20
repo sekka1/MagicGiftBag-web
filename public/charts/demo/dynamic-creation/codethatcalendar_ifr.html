@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>CodeThat Calendar</title>
+</head>
+<link href="ctcstd.css" rel="stylesheet" type="text/css">
+<script language=javascript src="../Scripts/codethatcalendarstd.js"></script>
+<body>
+<script language=javascript>
+if(!window.opener)window.opener=window.parent;
+var c;
+if(ua.moz) 
+{
+	c = this.parent.codethatcalendar;
+	window.opener = this.parent;
+}
+else if(window.opener)
+	c = window.opener.codethatcalendar;
+if(c)  
+{       
+	document.write("<div class='clsBody'>");
+	c.create(document);
+	document.write("</div>");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+a.fblink:link {color:#3300CC;}
+a.fblink:active {color:#3300CC;}
+a.fblink:visited {color:#3300CC;}
+a.fblink:hover {color:#3300CC;}
+
+p.header {
+    text-align:center;
+    font-family: serif;
+    font-size:40px;
+    color:white;
+}
+p.maintext {
+    text-align:left;
+    font-family: serif;
+    font-size:20px;
+}
+img.header {
+    vertical-align:text-bottom;
+}
+
+#header {
+    background: #442299;
+}
+#leftside {
+    position: absolute;
+    left: 0;
+    top: 70px;
+    width: 450px;
+}
+#rightside {
+    xpadding: 1px 1em 2em 1em;
+    padding: 1px 20px 1em 40px;
+    border-left: 434px solid #FFF;
+}
+
+#container {
+    position: relative;
+    width: 886px; /* width + border for IE 5.x */
+    w\idth: 880px; /* real width */
+    margin: auto;
+}

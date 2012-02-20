@@ -1,0 +1,22 @@
+<?php
+
+echo '<table border="1">';
+
+echo '<tr><td>Name</td><td>Description</td><td>edit</td><td>delete</td><td>Create Content</td></tr>';
+
+foreach( $this->results as $aResult ){
+
+	echo '<tr>';
+
+	echo '<td>' . $aResult['name'] . '</td>';
+	echo '<td>' . $aResult['description'] . '</td>';
+	echo '<td>edit name</td>';
+	echo '<td>delete</td>';
+	echo '<td><a href="/events/options/id/'.$aResult['event_id_seq'].'">Go</td>';
+
+	echo '</tr>';
+}
+
+echo '</table>';
+
+?>

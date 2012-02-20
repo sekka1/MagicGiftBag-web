@@ -1,0 +1,34 @@
+<a href="/tuning">Back to Home</a><br/><br/>
+
+<form method="post" action="/tuning/personatypeadd">
+Add a Persona Type: 
+<input type="text" name="name" value=""/>
+<input type="submit" value="add"/>
+</form>
+
+<?php
+
+echo '<table border="1">';
+echo '<tr>
+        <td>name</td>
+        <td>create_datetime</td>
+        <td>modify_datetime</td>
+        <td>delete</td>
+     </tr>';
+
+foreach( $this->results as $aResult ){
+
+    echo '<tr>';
+    echo '<td>' . $aResult['name'] . '</td>';
+    echo '<td>' . $aResult['datetime_created'] . '</td>';
+    echo '<td>' . $aResult['datetime_modified'] . '</td>';
+    echo '<td><a href="personatypedelete/id_seq/'. $aResult['id_seq'] . '">x</a>------------</td>';
+    echo '<td><a href="words/persona_type_id_seq/'. $aResult['id_seq'] . '/name/'. $aResult['name'] .'">Words</a></td>';
+    echo '<td><a href="products/persona_type_id_seq/'. $aResult['id_seq'] . '/name/'. $aResult['name'] .'">Products</a></td>';
+    echo '</tr>';
+
+}
+
+echo '</table>';
+
+?>

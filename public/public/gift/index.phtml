@@ -1,0 +1,719 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+  <head>
+    <!-- ##%% The below scripts need to be loaded to the host and redirected -->
+<!--	<script type="text/javascript" src="jquery.js"></script> --->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<!--    <script type='text/javascript' src='js/jquery.ba-hashchange.min.js'></script> --->
+    <script type='text/javascript' src='js/dynamicpage.js'></script>
+	<!-- Facebook Token input plugin -->
+	<script type="text/javascript" src="/public/gift/jquery.tokeninput.js"></script>
+<!--	<link rel="stylesheet" type="text/css" href="/public/gift/token-input.css" /> --->
+	<link rel="stylesheet" type="text/css" href="/public/gift/token-input-facebook.css" />
+	<link rel="stylesheet" type="text/css" href="/public/gift/token-input-products.css" />
+	<!-- Word Cloud plugin -->
+    <script type="text/javascript" src="/public/gift/jqcloud-0.2.4.js"></script>
+	<link rel="stylesheet" type="text/css" href="/public/gift/jqcloud.css" />
+    <!-- Style sheet -->
+    <link href="/public/gift/masterStyle.css" rel="stylesheet" type="text/css">
+	<!-- Google Font --->
+	<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>Magic Gift Bag | Find gifts your friends actually like!</title>
+    
+    <!--[if IE]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	<link href="masterStyle.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+  <!-- Page Container -->
+    <div class="pageContainer" id="pageContainer">
+	  <div class="pageBorder">
+      <!-- Navigation Bar -->
+        <div class="navContainer" id="navContainer">
+          <table>
+          <tr>
+          <td id="logoBar">
+             <img src="/public/gift/img/templogo.png" alt="Magic Gift Bag Logo" height="60"></img>
+             <h1>Magic Gift Bag</h1>
+            &nbsp;&nbsp;<h2>Find gifts your friends will actually like!</h2>
+          </td>
+          </tr>
+          </table>
+          
+            <div class="menuContainer" id="menuContainer" style="visibility: hidden;"> 
+			
+			<!-- Menu Step 1 view-->
+			<div id="m1View">
+		      <div id="m1View-1"></div>
+			  <div class="friendSearchContainer" id="sliderFriendSearch">
+				<input type="text" autocomplete="off" name="friendSearchInput" id="friendSearchInput" />
+   		  	  </div>		
+			</div>
+			
+			<!-- Menu Step 2 view-->
+			<div id="m2View">
+			<div id="m2View-1"></div>
+			<div id="m2View-2"></div>
+			</div>
+			
+			<!-- Menu Step 3 view --->
+			<div id="m3View">
+              <table cellpadding="0" cellspacing="0">
+              <tr>
+                <td id="m3View-1">
+                </td>
+            	<td id="m3View-2">
+
+                </td>
+                <td id="m3View-3">
+                  <h3>who likes&nbsp;</h3>
+            	</td>
+            <!--  </td>
+              <td id="menu2Content">-->
+                 <td id="m3View-4">
+
+                  <input type="text" autocomplete="off" name="productSearchTokens" id="productSearchTokens" />
+              	  <span id="productSearchPointer" style="display:none"></span>
+
+             	</td>
+			  </tr>
+			  
+			  <tr>
+			  <td id="m3View-s1">
+			  
+			  </td>
+			  <td id="m3View-s2">
+			  <ul>
+  			    <li> <div class="friendSearchContainer" id="menuFriendSearch">
+				     </div>
+				     <input type="submit" class="button" value=" X " name="friendSearchClear" id="friendSearchClear" onclick="javascript:$('#friendSearchInput').tokenInput('clear'); $('#friendSearchInput').focus();" style="cursor:pointer" />
+			    </li>
+			  </ul>
+			  </td>
+			  <td id="m3View-s3">
+			  </td>
+			  <td id="m3View-s4">
+                  <ul id="menuCategories">
+            	    <li>
+                      <input type="text" autocomplete="on" name="AddInput" id="productSearchAddInput" />
+            	    </li>
+                    <li>
+                      <input type="button" class="button" value="V" name="categoriesArrow" id="categoriesArrow" />
+            <!--  	<a href="javascript:wfSS_2();" class="menuLink">V</a> --->
+                      <div class="token-input-dropdown-products" id="categoriesDropdown">
+               	      </div>
+            	    </li>
+            	    <li>
+            	      <input type="button" class="button" value="Add" name="Add" id="productSearchAdd" />
+            	    </li>
+	                <li>
+	 			      <input type="button" class="button" value=" X " name="productSearchClear" id="productSearchClear" style="cursor:pointer"/>
+				    </li>
+    			  </ul>
+				</td>
+			  </tr>
+		     </table>
+			 </div>
+			 
+		</div><!--menuContainer-->
+		
+		
+		
+		
+	 <!-- </td>
+  </tr> -->
+  
+ <!-- Old row for 'new friend', 'new interest' 
+  <tr>
+  <td width="200" height="16">
+    <a href="#" onclick="javascript:$('#friendSearchInput').tokenInput('clear'); $('#friendSearchInput').focus();" class="menuLink">New Friend</a>
+  </td>
+  <td>
+    
+
+  </td>
+  </tr>-->
+  
+ <!-- </table>-->
+
+ </div> <!-- nav container closing --->
+	  
+<!--- SLIDER VIEW ---->
+    <div class="slider" id="slider">
+	  <div class="sliderHeader" id="sliderHeader" style="visibility: hidden;">
+	    <div class="sliderStep" id="sliderStep"></div>
+		<div class="sliderHeaderPic" id="sliderHeaderPic"></div>
+		<div class="sliderHeaderTitle" id="sliderHeaderTitle"></div>
+		<div class="sliderHeaderTooltip" id="sliderHeaderTooltip"></div>
+	  </div>
+	  <div class="sliderBody" id="sliderBody">
+        <!-- Step 0 -- Connect with FB --> 
+        <div class="sliderContents" id="ss_0" style="display:none;">
+    	   <h3>Connect with Facebook</h3>
+           <a href ="#"><h3>Skip this step</h3></a>
+		</div>      
+        <!-- Step 1 -- Select a Friend -->
+        <div class="sliderContents" id="ss_1" style="display:none;">
+         <h3>Who would you like to find gifts for?</h3>
+		 <br />
+        </div>
+        <!-- Step 2 -- Select a Category -->
+        <div class="sliderContents" id="ss_2" style="display:none;">
+        </div>
+	  </div> <!-- End sliderBody div -->
+    </div> <!-- End slider div -->
+
+
+
+
+<!--- PRODUCT CATALOG VIEW --->
+<div id="sideNav" style="display:none;">
+  <div id="resultsSummary">
+  </div>
+  <hr>
+  <div id="priceFilter">
+    <h3>Price</h3>
+    From: <input type="text" autocomplete="off" name="priceMin" id="priceMin" />
+    To: <input type="text" autocomplete="off" name="priceMin" id="priceMax"  />
+  </div>
+  <hr>
+  <div id="merchantFilter">
+  <h3>Brands</h3>
+  <br />
+	A&E (100)
+	<br />
+	Gucci (50)
+  </div>
+  <hr>
+</div>	  
+  <div class="contentContainer">
+  	<div id="productNav" style="display:none;">	
+	<table>
+	<tr>
+	  <td>
+	  page 1 2 3 ... 25 > >|
+	  </td>
+	</tr>
+	</table>
+	</div>
+
+        <!-- Step 3 -- Pick a Product -->
+    <div class="procuctsStep" id="ss_3" style="display:none;">
+	</div>     
+  </div><!-- content container -->
+  </div><!-- page border-->
+</div><!-- page container -->
+  
+  
+  
+ <!-- ------------------------------------------------------------------------------------------------------------------------->
+ <!-- -------------------------------------------------------------------------------------------------------------------------> 
+ <!-- ------------------------------------------------------------------------------------------------------------------------->
+ <!-- ------------------------------------------------------------------------------------------------------------------------->
+ <!-- ------------------------------------------------------------------------------------------------------------------------->
+ <!-- ------------------------------------------------------------------------------------------------------------------------->
+ <!-- ------------------------------------------------------------------------------------------------------------------------->					
+<script type="text/javascript">
+/////////////////////////////////////////////////////////////////
+// Global Variables ////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+var domainRef = 'http://www.magicgiftbag.com';
+var currentFriend ="";
+var currentCategories="";
+var selectedCategory="";
+var resultsPerPage = 24;
+var catalogPage = 1;
+var priceRange = [0,999999];
+//var friendList;
+////////////////////////////////////////////////////////////////
+// On Load Events //////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+$(document).ready(function(){
+//  returnsJSON = eval(returnsJSON); ##&&
+//  clear out all slider elements
+  friendList();
+  wfSS_1();
+$("#productSearchAdd").click(function () {
+      //First update selectedCategory to equal what is currently in the field (the previously existing terms)
+      var query= $("#productSearchPointer").siblings("input[type=text]").val();
+      var queryString = query.toString();
+      queryString = queryString.replace(/,/gi, " ")
+      selectedCategory = queryString.split(" ");
+
+     //Add the string from the 'Add input' to the selectedCategory array
+     productQueryAdd();
+
+	//Submit the query by calling the retrieveProducts function
+	retrieveProducts();
+	//Clear the input box
+	document.getElementById('productSearchAddInput').value = '';
+});
+
+$("#productSearchClear").click(function () {
+	    $('#productSearchTokens').tokenInput('clear');
+});
+
+$("#productSearchSubmit").click(function () {
+///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////
+///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////
+///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////
+//////////////////////////////////////////////////////////////////////////////
+// THIS FUNCTION HAS BEEN BADLY MUTILATED. IF NEEDED, COPY FROM DESIGN1 BUILD//
+///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////
+///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////
+///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////
+if(document.getElementById('token-input-productSearchTokens').value!=='')
+{//if terms were typed but not tokenized, call productQueryAdd to tokenize and also submit the query
+//var query= $("#productSearchPointer").siblings("input[type=text]").val();
+var query= $("#productSearchPointer").siblings("input[type=text]").val();
+
+var queryString = query.toString();
+queryString = queryString.replace(/,/gi, " ")
+selectedCategory = queryString.split(" ");
+productQueryAdd();
+}
+else
+{//If no new items, submit the query and display products
+var query= $("#productSearchPointer").siblings("input[type=text]").val();
+var queryString = query.toString();
+queryString = queryString.replace(/,/gi, " ")
+	retrieveProducts();
+}
+
+});
+
+});
+
+
+function productQueryAdd()
+{//Add terms from the Add input box and then submit the query
+//first update the global array holding the query
+var txtObj = document.getElementById('productSearchAddInput').value;
+txtObj= txtObj.split(" ");
+selectedCategory = selectedCategory.concat(txtObj);
+alert('productQueryAdd result: '+txtObj); //temp##
+}
+
+/////////////////////////////////////////////////////////////////
+// Global Functions ////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+function removeContent(d)
+{
+  document.getElementById(d).style.display ='none';
+}
+function insertContent(d,type)
+{
+  document.getElementById(d).style.display = type;
+}
+function clearContent()
+{
+  removeContent('ss_0');
+  removeContent('ss_1');
+  removeContent('ss_2');
+  removeContent('ss_3');
+  removeContent('sideNav');
+  removeContent('productNav');
+}
+function clearMenu()
+{
+  removeContent('m1View');
+  removeContent('m2View');
+  removeContent('m3View');
+}
+function moveFriendSearch(location,destination)
+{//takes the friend search from its current location to the new destination
+  var originalHTML = '<input type="text" autocomplete="off" name="friendSearchInput" id="friendSearchInput" />';
+  document.getElementById('friendSearchInput').parentNode.innerHTML = "";  
+  document.getElementById(destination).innerHTML = originalHTML;
+  enableFriendSearch();
+  $('#friendSearchInput').tokenInput('add', {id: currentFriend[0].id, name: currentFriend[0].name});
+}
+function enableFriendSearch()
+{
+      $('#friendSearchInput').tokenInput(friendList,{
+    	minChars:3,
+//		deleteText:"",
+		hintText: "Type in a friend's name",
+		theme: "facebook",
+		searchDelay:100,
+		tokenLimit:1,
+		animateDropdown: false,
+		tokenFormatter: function(item) { return '<li onclick="$(\'#friendSearchInput\').tokenInput(\'clear\');"><p>' + item.name + '</p></li>' },
+		onAdd: function (item) {
+		selectFriend();
+		}, 
+	});
+
+}
+
+function enableProductSearch()
+{
+      $('#productSearchTokens').tokenInput('',{
+    	minChars:1000,
+//		deleteText:"",
+//		hintText: "Type in a friend's name",
+		theme: "products",
+//		tokenLimit:1,
+		animateDropdown: false,
+		productVariant: true,
+//		tokenFormatter: function(item) { return '<li onclick="$(\'#friendSearchInput\').tokenInput(\'clear\');"><p>' + item.name + '</p></li>' },
+		onAdd: function (item) {
+		}, 
+		onDelete: function(item){
+		//First update selectedCategory to equal what is currently in the field
+        var query= $("#productSearchPointer").siblings("input[type=text]").val();
+        var queryString = query.toString();
+        queryString = queryString.replace(/,/gi, " ");
+        selectedCategory = queryString.split(" ");
+		//Submit the query by calling the retrieveProducts function
+		retrieveProducts();
+		},
+	});
+}
+function updateProductSearch()
+{//creates the actual token and adds to other tokens
+	var strLength = selectedCategory.length
+	$('#productSearchTokens').tokenInput('clear');
+	for (i=0; i<strLength; i++)
+	{
+	  if (selectedCategory[i]!== '')
+	  {
+	  //first cleanse the text to be displayed to convert the character codes back to characters
+	  var tokenText = selectedCategory[i]; 
+	  	//convert quotes from their char code to the actual character
+	tokenText = tokenText.replace(/#39;/gi, '\'');
+	tokenText = tokenText.replace(/#34;/gi, '\"');
+	    $('#productSearchTokens').tokenInput('add',{id: selectedCategory[i],name: tokenText});
+	  }
+	}
+}
+
+////////////////////////////////////////////////////////////////
+// Work Flow Functions ////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+function wfRegister()
+{
+clearContent();
+insertContent('ss_0','block');
+}
+function wfSS_1()
+{
+clearContent();
+clearMenu();
+//insertContent('ss_1','block');
+//document.getElementById('sliderStep').innerHTML = 'Step 1';
+//removeContent('sliderHeaderPic');
+//document.getElementById('menuContainer').style.visibility = 'hidden';
+//document.getElementById('sliderHeader').style.visibility = 'visible';
+
+//need to have product search enabled because we clear it, thus it must exist. This could def be reworked
+enableProductSearch();
+
+document.body.style.height = '100%';
+document.body.style.height = window.height;
+
+//change the contents
+document.getElementById('m1View-1').innerHTML = '<h3>Who would you like to find gifts for?</h3>';
+
+//display the menu bar
+document.getElementById('menuContainer').style.visibility = 'visible';
+//dispaly the menu elements
+insertContent('m1View','block');
+}
+function wfSS_2()
+{
+clearContent();
+clearMenu();
+//insertContent('slider','block');
+//insertContent('ss_2','block');
+
+//change text 
+document.getElementById('m2View-1').innerHTML ='<h3>Pick one of '+currentFriend[0].name+'\'s interests to browse by:<h3>';
+
+//post friend's pic
+//document.getElementById('profPic').innerHTML = '<img src="https://graph.facebook.com/'+currentFriend[0].id+'/picture" / >';
+
+//product input starts in m3View-s4 so take it and move it to m2
+var tempHTML = document.getElementById('m3View-s4').innerHTML;
+document.getElementById('m3View-s4').innerHTML ='';
+document.getElementById('m2View-2').innerHTML = tempHTML;
+tempHTML = '';
+
+//make the menu visible
+document.getElementById('menuContainer').style.visibility = 'visible';
+
+//insert the relevant menu items
+insertContent('m2View','block');
+
+//enable product search functionality
+enableProductSearch();
+}
+
+function wfSS_3()
+{
+clearContent();
+clearMenu();
+//removeContent('slider');
+
+//document.getElementById('sliderStep').innerHTML = 'Step 3';
+
+//change the menu contents
+document.getElementById('m3View-1').innerHTML = '<h3>Gifts for</h3>';
+//grab the product search input box widget first, then change m2 to prof pic, then move widget to subm4
+var tempHTML = document.getElementById('m2View-2').innerHTML;
+document.getElementById('m2View-2').innerHTML ='';
+document.getElementById('m3View-2').innerHTML = '<img src="https://graph.facebook.com/'+currentFriend[0].id+'/picture" class="profPic" / >';
+document.getElementById('m3View-s4').innerHTML = tempHTML;
+document.getElementById('m3View-3').innerHTML = '<h3>who likes:</h3>';
+updateProductSearch();
+
+// Show the menu
+insertContent('m3','block');
+
+
+//Show the catalog nav bars
+insertContent('sideNav','inline');
+insertContent('productNav','inline');
+//Show the catalog
+insertContent('ss_3','block');
+//document.body.style.height = '100%';
+}
+
+////////////////////////////////////////////////////////////////
+// Friend Search Functions /////////////////////////////////////
+////////////////////////////////////////////////////////////////
+function friendList()
+{//Retrieve the user's FB friends and store in variable 'friendList'
+
+		$.ajax({
+     			type: 'GET',
+		     	url: domainRef+'/gift/getfriends',
+				async: false,
+				beforeSend: function() {
+				// if(x && x.overrideMimeType) {
+				//  x.overrideMimeType("application/j-son;charset=UTF-8");
+				//}
+		},
+		dataType: 'json',
+		success: function(data){
+		friendList=data.data;
+   		enableFriendSearch();		}
+   		});
+}
+
+function selectFriend()
+{//sets the screen to the friend's likes view and retrieves their likes(categories)   
+    if(document.getElementById('friendSearchInput').parentNode.id == 'sliderFriendSearch')
+	{//if the friend search needs to be moved from the slider
+ 	var input =  $('#friendSearchInput').tokenInput("get");
+	var name = input[0].name;
+	var id = input[0].id;
+    currentFriend = [{"id" : id, "name" : name}];
+  	  moveFriendSearch('sliderFriendSearch','menuFriendSearch')
+	}
+	else
+	{//if the friend search is already in the navbar
+	var input =  $('#friendSearchInput').tokenInput("get");
+	var name = input[0].name;
+	var id = input[0].id;
+    currentFriend = [{"id" : id, "name" : name}];
+    clearContent();
+	$('#productSearchTokens').tokenInput('clear');
+    //Call function to retrieve friend's likes, but only if the field is not in the slider
+	//We do this because when we move the search we have to re-add the tokens which calls this function already
+	//thus, calling the move function will call retrieveFriendCategories for us
+	retrieveFriendCategories(id);
+	}
+
+}
+
+////////////////////////////////////////////////////////////////
+// Product Populating Functions ////////////////////////////////
+////////////////////////////////////////////////////////////////
+function retrieveFriendCategories(id)
+{// Makes ajax call to retrieve the friend's likes(categories)
+		$.ajax({
+     			type: 'GET',
+		     	url: domainRef+'/gift/gettopcategorylist/user/'+id,
+				async: false,
+				beforeSend: function() {
+				// if(x && x.overrideMimeType) {
+				//  x.overrideMimeType("application/j-son;charset=UTF-8");
+				//}
+		},
+		dataType: 'json',
+		success: function(data){
+		  populateSearchTerms(data);
+   		  }
+   		});
+}
+
+function populateSearchTerms(seedList)
+{// This function populates the categories based on friend's likes ##$$ 
+  if (seedList.length == 0)
+  {//Below writes the fail to find message ##$$
+  wfSS_2();
+  document.getElementById('ss_2').innerHTML ="<b>Sorry!</b> <br />We were unable to find any product recommendations for this friend.<br /><br /> Try a friend with a complete Facebook profile";
+  currentCategories='';
+  document.getElementById('categoriesDropdown').innerHTML = '';
+  }
+  else
+  {	    
+  var numCol = 1; 
+  var j =0;
+  var buildString ='<ul>';
+  var cloudList=[];
+     for (i=0;i<seedList.length;i++)
+  	 {//Below writes HTML to populate the products ##$$
+//	    document.getElementById('seedListNav').innerHTML +='<li class="bg_list"><a href="javascript:retrieveProducts(\''+seedList[i].name+'\')">'+seedList[i].name+'</a></li>';
+        
+		//cleanse the string being sent to retrieveProducts() to ensure no ' in str. Otherwise js thinks it is closing the string
+		var cleansedSeed = seedList[i].name;
+		cleansedSeed = cleansedSeed.replace(/\'/g, '#39;');
+		cleansedSeed = cleansedSeed.replace(/\"/g, '#34;'); 								
+	    buildString +='<li style="cursor:pointer" onclick="retrieveProducts(\''+cleansedSeed+'\')"><a href="#">'+seedList[i].name+'</a></li>';
+        j++;
+/*		if (j >= numCol)
+		{
+     	  buildString +='</tr><tr>';
+		  j=0;
+		}
+*/		
+		urlString ='javascript:retrieveProducts(\"'+cleansedSeed+'\")';
+		cloudList.push({text: seedList[i].name, url: urlString});
+//		cloudList.push({text: seedList[i].name, weight: Math.floor(Math.random()*11), url: urlString});
+//		'<li class="bg_list"><a href="javascript:retrieveProducts(\''+seedList[i].name+'\')">'+seedList[i].name+'</a></li>';
+	 }
+     buildString +='</ul>';
+//     document.getElementById('ss_2').innerHTML = buildString;
+     document.getElementById('categoriesDropdown').innerHTML = buildString;
+	 currentCategories=buildString;
+      document.getElementById('ss_2').innerHTML = '';
+	  $("#ss_2").jQCloud(cloudList);
+     wfSS_2();	 
+  }
+}
+
+function retrieveProducts(name)
+{ 
+  name = name || 'default';      
+  if (name !== 'default')
+  {//only change selectedCategory if an input is given. Only clicking on Interests will result in calling this func with an input
+  		  selectedCategory = name.split(" ");
+  }
+  var validQuery = false; 
+  var strLength = selectedCategory.length
+  for (i=0; i<strLength; i++)
+  {
+   if (selectedCategory[i] != null && selectedCategory[i] != '' && selectedCategory[i] != ' ' && selectedCategory[i] != ',')
+   {//cycle through each item and check to see if its a space, comma, or blank. 
+    //If not then the query is valid
+    validQuery = true;
+	i += strLength;
+   } 
+  } 
+   
+  if (validQuery == false)
+  {//don't run the search if the input is invalid
+   alert ('didnt pass the check');
+  }
+  else
+  {
+  var passString = selectedCategory.toString();
+  alert('before cleansing ' + passString);
+  passString = passString.replace(/\'/g, '');
+  passString = passString.replace(/\"/g, ''); 
+  passString = passString.replace(/,/g, ' ');
+  passString = passString.replace(/&#47;/g, ' ');
+  passString = encodeURI(passString);	
+  alert('cleansing before get call result: '+passString); //temp##
+  var searchIndex = resultsPerPage*catalogPage;
+  var priceString = '['+priceRange.toString()+']';
+  var searchURL = domainRef+'/gift/search/numberOfItems/'+resultsPerPage+'/searchIndex/'+searchIndex+'/priceRange/'+priceString+'/q/'+ passString;
+//  searchURL = encodeURI(searchURL); //Makes the value URL friendly
+     		$.ajax({
+          			type: 'GET',
+     		     	url: searchURL,
+     				async: false,
+     				beforeSend: function() {
+     				// if(x && x.overrideMimeType) {
+     				//  x.overrideMimeType("application/j-son;charset=UTF-8");
+     				//}
+     		},
+     		dataType: 'json',
+     		success: function(data){
+			catalogPage++;
+     		populateProducts(data);
+        				}
+        		});
+  }
+}
+function populateProducts(prodJSON)
+{
+  var buildString='';
+  var numCol = 4;
+  var colCount = 0;
+  var catalogLength = prodJSON.length;
+  var queryDisplay= selectedCategory.toString();
+  queryDisplay = queryDisplay.replace(/,/gi, " ");
+  //convert quotes from their char code to the actual character
+  queryDisplay = queryDisplay.replace(/#39;/gi, '\'');
+  queryDisplay = queryDisplay.replace(/#34;/gi, '\"');
+  if (queryDisplay.charCodeAt(0) == 32)
+  {//check if there's a leading space
+    queryDisplay = queryDisplay.substr(1);
+  }
+
+  wfSS_3();
+  if (prodJSON.length < 2)
+  {//if no products were found for the query display no results message. first item in array is meta data, thus check if less than 2
+   buildString = '<div class="noProductResults">';
+   buildString += '<p>Sorry, no results were found matching</p><p class="queryDisplay">"'+queryDisplay+'"</p>';
+   buildString += '</div>';
+   document.getElementById('ss_3').innerHTML = buildString;
+   document.getElementById('sideNav').style.visibility = 'hidden';
+   document.getElementById('productNav').style.visibility = 'hidden';
+  }
+  else
+  {//if results are found, draw catalog
+    buildString= '<table class="prodCatalog" width="760"><tr>';     
+    for (i=1;i<catalogLength;i++)
+	{
+//      buildString+='<td onClick="window.location=\''+prodJSON[i].item_url+'\'" style="cursor:pointer" ><div class="prodOutline"><div class="prodContainer"><div class="prodTitle">';
+      buildString+='<td><a href="'+prodJSON[i].item_url+'"> <div class="prodOutline"><div class="prodContainer"><p class="prodTitle">';
+	    buildString+=prodJSON[i].title;
+	  buildString+='</p>';
+	  buildString+='<div><img class="prodImage" src="';
+	    buildString+=prodJSON[i].img_medium;
+	  buildString+='" width="100" height="100"></div>';
+	  buildString+='<div>';
+	    buildString+='<p class="prodFooter">$'+prodJSON[i].price.toFixed(2);+'</p>';
+	  buildString+='</div></div></div>';
+	  buildString+='</a></td>';
+	  
+	  colCount++;
+	  if (colCount>=numCol)
+	  {//if num of columns reached, close row and begin next row
+	    buildString+='</tr><tr>';
+		colCount= 0;
+	  }
+	}
+	buildString+='</tr></table>';
+    document.getElementById('ss_3').innerHTML = buildString;
+	document.getElementById('resultsSummary').innerHTML = '<p> 384 products found for:<br /></p><p class="queryDisplay">"'+queryDisplay+'"</p>';
+    document.getElementById('sideNav').style.visibility = 'visible';
+    document.getElementById('productNav').style.visibility = 'visible';
+  }
+}
+</script>  
+  
+  
+  
+  </body>
+</html>

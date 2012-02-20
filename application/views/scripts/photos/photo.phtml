@@ -1,0 +1,16 @@
+
+<?php if( $this->showView ): ?>
+<html>
+<head>
+</head>
+<body>
+<img src="http://<?php echo $this->server . ereg_replace( "__", "/", $this->image_url ); ?>"/><br/>
+
+<a href="">Import into Facebook</a><br/>
+<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="http://<?php echo $this->server . ereg_replace( "__", "/", $this->image_url ); ?>" show_faces="true" width="<?php echo $this->width ?>" font=""></fb:like>
+
+<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=137655772967207&amp;xfbml=1"></script><fb:comments href="http://<?php echo $this->server . ereg_replace( "__", "/", $this->image_url ); ?>" width="<?php echo $this->width; ?>"></fb:comments>
+
+</body>
+</html>
+<?php endif ?>

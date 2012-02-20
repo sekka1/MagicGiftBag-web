@@ -1,0 +1,12 @@
+<form action="/eventinfo/edit/id/<?php echo $this->event_id_seq; ?>" method="post">
+Event Info name:<input type="text" name="name" value="<?php echo $this->results[0]['name']; ?>"/><br/>
+Description:<textarea name="description" cols="100" rows="10"><?php echo $this->results[0]['description']; ?></textarea><br/>
+Address:<input type="text" name="address" value="<?php echo $this->results[0]['address']; ?>"/><br/>
+City:<input type="text" name="city" value="<?php echo $this->results[0]['city']; ?>"/><br/>
+State:<input type="text" name="state" value="<?php echo $this->results[0]['state']; ?>"/><br/>
+Zip: <input type="text" name="zip" value="<?php echo $this->results[0]['zip']; ?>"/><br/>
+location_geo_lat: <?php echo $this->results[0]['location_geo_lat']; ?><br/>
+location_geo_long:<?php echo $this->results[0]['location_geo_long']; ?><br/>
+<input type="submit" name="submit"/>
+</form>
+

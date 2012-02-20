@@ -1,0 +1,12 @@
+<?php 
+
+	if( $this->templateType == 'flex' ){
+
+		// Put content in the flex template
+		include( 'flex.phtml' );
+	}
+	else{
+		// Output with no template
+		echo $this->layout()->content; 
+	}
+?> 

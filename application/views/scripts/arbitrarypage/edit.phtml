@@ -1,0 +1,6 @@
+<form action="/arbitrarypage/edit/id/<?php echo $this->arbitrary_page_id_seq; ?>" method="post">
+Page Name:<input type="text" name="name" value="<?php echo $this->results[0]['name']; ?>"/><br/>
+Description:<textarea name="description" cols="100" rows="10"><?php echo $this->results[0]['description']; ?></textarea><br/>
+<input type="submit" name="submit"/>
+</form>
+

@@ -1,0 +1,30 @@
+<form action="/template/edit/id/<?php echo $this->event_id_seq; ?>" method="post">
+
+<table border="1">
+
+<tr><td>Used</td><td>Name</td><td>Description</td></tr>
+
+<?php
+
+foreach( $this->template_available as $aTemplate ){
+
+	echo '<tr>';
+
+	if( $aTemplate['template_available_page_id_seq'] == $this->results[0]['template_available_page_id_seq'] ){
+		echo '<td><input type="radio" name="used" value="'.$aTemplate['template_available_page_id_seq'].'" checked></td>';
+	} else {
+		echo '<td><input type="radio" name="used" value="'.$aTemplate['template_available_page_id_seq'].'"></td>';
+	}
+	
+	echo '<td>' . $aTemplate['name'] . '</td>';
+	echo '<td>' . $aTemplate['description'] . '</td>';
+
+	echo '</tr>';
+}
+
+?>
+</table>
+
+<input type="submit" name="submit"/>
+</form>
+

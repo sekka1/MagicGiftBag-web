@@ -1,0 +1,25 @@
+<a href="/arbitrarypage/create/id/<?php echo $this->event_id_seq; ?>">Create New Page</a><br/> -- Might be taking the add a new page option out.<br/>
+
+<?php
+
+echo '<table border="1">';
+
+echo '<tr><td>Name</td><td>Description</td><td>edit</td><td>delete</td></tr>';
+
+foreach( $this->results as $aResult ){
+
+        echo '<tr>';
+
+        echo '<td>' . $aResult['name'] . '</td>';
+        echo '<td>' . $aResult['description'] . '</td>';
+        echo '<td><a href="/arbitrarypage/edit/id/'.$aResult['arbitrary_page_id_seq'].'">Go</a></td>';
+        echo '<td>delete</td>';
+//        echo '<td><a href="/events/options/id/'.$aResult['event_id_seq'].'">Go</td>';
+
+        echo '</tr>';
+}
+
+echo '</table>';
+
+?>
+

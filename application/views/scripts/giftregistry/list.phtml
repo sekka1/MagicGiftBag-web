@@ -1,0 +1,23 @@
+<?php
+
+echo '<table border="1">';
+
+echo '<tr><td>Name</td><td>url</td><td>edit</td><td>delete</td></tr>';
+
+foreach( $this->results as $aResult ){
+
+        echo '<tr>';
+
+        echo '<td>' . $aResult['name'] . '</td>';
+        echo '<td>' . $aResult['url'] . '</td>';
+        echo '<td><a href="/giftregistry/edit/id/'.$aResult['gift_registry_id_seq'].'">Go</a></td>';
+        echo '<td>delete</td>';
+//        echo '<td><a href="/giftregistry/id/'.$aResult['event_id_seq'].'">Go</td>';
+
+        echo '</tr>';
+}
+
+echo '</table>';
+
+?>
+

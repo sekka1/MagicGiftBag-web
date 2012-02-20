@@ -1,0 +1,278 @@
+<html>
+<title>A Simple Store</title>
+<table width='100%' cols='2' border='3px'>
+<colgroup span='2'>
+	<col width='20%'></col>
+	<col width='80%'></col>
+</colgroup>
+	<tr><td colspan='2'><center><h1>Simple Store</h1></center></td></tr>
+	<tr><td  valign='top'>
+		<table width='100%' align='left' height='100%'>
+		<?php
+			define('KEYID','AKIAJO6OOIFG3LCMZPGA');
+			define('AssocTag','wedvite-20');
+			  print("
+				<form name='SearchTerms' action=/index/simplestore method='GET'>
+				<tr><td valign='top'>
+					<b>Choose a Category</b><br>
+					<div align='center'>
+						<select name='SearchIndex'>
+							<option value='Books'>Books</option>
+							<option value='DVD'>DVD</option>
+							<option value='Music'>Music</option>
+						</select>
+					</div>
+				</td></tr>
+				<tr><td><b>Enter Key Words</b><br><input type='text' name='Keywords' size='40'/></td></tr>
+				<input type='hidden' name='Action' value='Search'>
+				<input type='hidden' name='ItemPage' value='1'>
+				<input type='hidden' name='CartId' value=$CartId>
+				<input type='hidden' name='HMAC' value=$HMAC>
+				<tr align='center'><td><input type='submit'/></td></tr>
+				</form> ");
+				
+				//display link for seeing cart contents if a cart exists
+				$CartId = $_GET['CartId'];
+				$HMAC = urlencode($_GET['HMAC']);
+				if($CartId != ''){
+					$CartGet = "SimpleStore.php?Action=CartGet&CartId=$CartId&HMAC=$HMAC";
+					print("<tr align='center'><td><a href=$CartGet>See Cart Contents</a></tr></td>");
+				}
+		?>	
+		</table>
+	<td>
+		<?php
+			if($_GET['Action'] == 'Search'){
+				if($_GET['Keywords'] == ''){
+					print("Please enter keywords for your search.");
+				}else{
+					$keywords = urlencode($_GET['Keywords']);
+					ItemSearch($_GET['SearchIndex'], $keywords, $_GET['ItemPage']);
+				}
+			}
+			if($_GET['Action'] == 'SeeDetails'){
+				ItemLookup($_GET['ASIN'], $_GET['SearchIndex']);
+			}
+			if($_GET['Action'] == 'CartAdd'){
+				if($_GET['CartId'] != ''){
+					CartAdd($_GET['OfferListingId']);
+				}else{
+					CartCreate($_GET['OfferListingId']);
+				}
+			}
+			if($_GET['Action'] == 'Remove'){
+				removeFromCart($_GET['CartItemId']);
+			}
+			if($_GET['Action'] == 'CartGet'){
+				getCartContents($_GET['CartId'], urlencode($_GET['HMAC']));
+			}
+		?>
+	</td>
+</table>
+<table width='100%'>			
+	<tr><td colspan="2"><font size="2px"><br><center>Copyright 2006, Simple Store<br>Product information and pictures Copyright Amazon</center></font></td></tr>
+</table>
+<?php
+function ItemSearch($SearchIndex, $Keywords, $ItemPage){
+	$request="http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=".KEYID."&AssociateTag=".AssocTag."&Version=2006-09-11&Operation=ItemSearch&ResponseGroup=Medium,Offers";
+	$request.="&SearchIndex=$SearchIndex&Keywords=$Keywords&ItemPage=$ItemPage";
+	//The use of `file_get_contents` may not work on all servers because it relies on the ability to open remote URLs using the file manipulation functions. 
+	//PHP gives you the ability to disable this functionality in your php.ini file and many administrators do so for security reasons.
+	//If your administrator has not done so, you can comment out the following 5 lines of code and uncomment the 6th.  
+	$session = curl_init($request);
+	curl_setopt($session, CURLOPT_HEADER, false);
+	curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($session);
+	curl_close($session); 
+	//$response = file_get_contents($request);
+	$parsed_xml = simplexml_load_string($response);
+	printSearchResults($parsed_xml, $SearchIndex);
+}
+//------------------------------------------------------------------------------------------------------
+function printSearchResults($parsed_xml, $SearchIndex){
+	$numOfItems = $parsed_xml->Items->TotalResults;
+	$totalPages = $parsed_xml->Items->TotalPages;
+	$CartId = $_GET['CartId'];
+	$HMAC = urlencode($_GET['HMAC']);
+	print("<table>");
+	if($numOfItems>0){
+		foreach($parsed_xml->Items->Item as $current){
+			if(isset($current->Offers->Offer->OfferListing->OfferListingId)){ //only show items for which there is an offer
+				print("<tr><td><img src='".$current->MediumImage->URL."'></td>");
+				print("<td><font size='-1'><b>".$current->ItemAttributes->Title."</b>");
+				if(isset($current->ItemAttributes->Director)){
+					print("<br>Director: ".$current->ItemAttributes->Director);
+				} elseif(isset($current->ItemAttributes->Author)) {
+					print("<br>Author: ".$current->ItemAttributes->Author);
+				} elseif(isset($current->ItemAttributes->Artist)) {
+					print("<br>Artist: ".$current->ItemAttributes->Artist);
+				}
+				print("<br>Price: ".$current->Offers->Offer->OfferListing->Price->FormattedPrice);
+				$asin = $current->ASIN;
+				$details = "SimpleStore.php?Action=SeeDetails&ASIN=$asin&SearchIndex=$SearchIndex&CartId=$CartId&HMAC=$HMAC";
+				print("<br><a href=$details>See Details</a>");
+				$offerListingId = urlencode($current->Offers->Offer->OfferListing->OfferListingId);
+				$CartAdd = "SimpleStore.php?Action=CartAdd&OfferListingId=$offerListingId&CartId=$CartId&HMAC=$HMAC";
+				print("&nbsp;&nbsp;&nbsp; <a href=$CartAdd>Add to Cart</a>");
+				print("<tr><td colspan=2>&nbsp;</td> </tr> ");
+			}
+		}
+	}else{
+		print("<center>No matches found.</center>");
+	}
+	print("<tr><td align='left'>");
+	//allow for paging through results
+	if($_GET['ItemPage'] > 1 && $totalPages > 1){ //check to see if there are previous pages
+		$Keywords = urlencode($_GET['Keywords']);
+		$ItemPage = $_GET['ItemPage']-1;
+		$prevPage = "SimpleStore.php?Action=Search&SearchIndex=$SearchIndex&Keywords=$Keywords&ItemPage=$ItemPage&CartId=$CartId&HMAC=$HMAC";
+		print("<a href=$prevPage>Previous Page</a></td><td align='right'>");
+	}
+	if($_GET['ItemPage'] < $totalPages){ //check to see if there are more pages
+		$Keywords = urlencode($_GET['Keywords']);
+		$ItemPage = $_GET['ItemPage']+1;
+		$nextPage = "SimpleStore.php?Action=Search&SearchIndex=$SearchIndex&Keywords=$Keywords&ItemPage=$ItemPage&CartId=$CartId&HMAC=$HMAC";
+		print("<a href=$nextPage>Next Page</a></td></tr>");
+	}
+}
+//-------------------------------------------------------------------------------------------------------
+function ItemLookup($asin, $SearchIndex){
+	$request = "http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=".KEYID."&AssociateTag=".AssocTag."&Version=2006-09-11&Operation=ItemLookup&ItemId=$asin&ResponseGroup=Medium,Offers";
+	//The use of `file_get_contents` may not work on all servers because it relies on the ability to open remote URLs using the file manipulation functions. 
+	//PHP gives you the ability to disable this functionality in your php.ini file and many administrators do so for security reasons.
+	//If your administrator has not done so, you can comment out the following 5 lines of code and uncomment the 6th.  
+	$session = curl_init($request);
+	curl_setopt($session, CURLOPT_HEADER, false);
+	curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($session);
+	curl_close($session);
+	//$response = file_get_contents($request);
+	$parsed_xml = simplexml_load_string($response);
+	printDetails($parsed_xml, $SearchIndex);
+}
+//-------------------------------------------------------------------------------------------------------
+function printDetails($parsed_xml, $SearchIndex){
+	print("<table>");
+		if($SearchIndex == "Books"){
+			print("<tr><td><img src='".$parsed_xml->Items->Item->LargeImage->URL."'></td>");
+			print("<td>".$parsed_xml->Items->Item->ItemAttributes->Title);
+			print("<br>".$parsed_xml->Items->Item->ItemAttributes->Author);
+			print("<br>".$parsed_xml->Items->Item->ItemAttributes->Binding);
+			print("<br>".$parsed_xml->Items->Item->ItemAttributes->NumberOfPages." pages");
+			print("<br><b>".$parsed_xml->Items->Item->Offers->Offer->OfferListing->Price->FormattedPrice."</b>");
+		}
+		if($SearchIndex == "Music"){
+			print("<tr><td><img src='".$parsed_xml->Items->Item->LargeImage->URL."'></td>");
+			print("<td>".$parsed_xml->Items->Item->ItemAttributes->Title);
+			print("<br>".$parsed_xml->Items->Item->ItemAttributes->Artist);
+			print("<br>Label: ".$parsed_xml->Items->Item->ItemAttributes->Label);
+			print("<br>Release Date: ".$parsed_xml->Items->Item->ItemAttributes->ReleaseDate);
+			print("<br><b>".$parsed_xml->Items->Item->Offers->Offer->OfferListing->Price->FormattedPrice."</b>");
+		}
+		if($SearchIndex == "DVD"){
+			print("<tr><td><img src='".$parsed_xml->Items->Item->LargeImage->URL."'></td>");
+			print("<td>".$parsed_xml->Items->Item->ItemAttributes->Title);
+			print("<br>Director: ".$parsed_xml->Items->Item->ItemAttributes->Director);
+			print("<br>Rated ".$parsed_xml->Items->Item->ItemAttributes->AudienceRating);
+			print("<br>Label: ".$parsed_xml->Items->Item->ItemAttributes->Label);
+			print("<br>Release Date: ".$parsed_xml->Items->Item->ItemAttributes->ReleaseDate);
+			print("<br><b>".$parsed_xml->Items->Item->Offers->Offer->OfferListing->Price->FormattedPrice."</b>");
+		}
+		$offerListingId = urlencode($parsed_xml->Items->Item->Offers->Offer->OfferListing->OfferListingId);
+		$CartId = $_GET['CartId'];
+		$HMAC = urlencode($_GET['HMAC']);
+		$CartAdd = "SimpleStore.php?Action=CartAdd&OfferListingId=$offerListingId&CartId=$CartId&HMAC=$HMAC";
+		print("&nbsp;&nbsp;&nbsp; <a href=$CartAdd>Add to Cart</a>");
+		$search = "SimpleStore.php?Action=Search&CartId=$CartId&HMAC=$HMAC";
+		print("<br>&nbsp;&nbsp;&nbsp; <a href=$search>Continue Searching</a>");
+		print("</table>");		
+}
+//-------------------------------------------------------------------------------------------------------
+function cartCreate($offerListingId){
+	$request="http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=".KEYID."&AssociateTag=".AssocTag."&Version=2006-09-11&Operation=CartCreate&Item.1.OfferListingId=$offerListingId&Item.1.Quantity=1";
+	//The use of `file_get_contents` may not work on all servers because it relies on the ability to open remote URLs using the file manipulation functions. 
+	//PHP gives you the ability to disable this functionality in your php.ini file and many administrators do so for security reasons.
+	//If your administrator has not done so, you can comment out the following 5 lines of code and uncomment the 6th.  
+	$session = curl_init($request);
+	curl_setopt($session, CURLOPT_HEADER, false);
+	curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($session);
+	curl_close($session);
+	//$response = file_get_contents($request);
+	$parsed_xml = simplexml_load_string($response);
+	showCartContents($parsed_xml);
+}
+//-------------------------------------------------------------------------------------------------------
+function cartAdd($offerListingId){
+	$CartId = $_GET['CartId'];
+	$HMAC = $_GET['HMAC'];
+	$request="http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=".KEYID."&AssociateTag=".AssocTag."&Version=2006-09-11&Operation=CartAdd&CartId=$CartId&HMAC=$HMAC&Item.1.OfferListingId=$offerListingId&Item.1.Quantity=1";
+	//The use of `file_get_contents` may not work on all servers because it relies on the ability to open remote URLs using the file manipulation functions. 
+	//PHP gives you the ability to disable this functionality in your php.ini file and many administrators do so for security reasons.
+	//If your administrator has not done so, you can comment out the following 5 lines of code and uncomment the 6th.  
+	$session = curl_init($request);
+	curl_setopt($session, CURLOPT_HEADER, false);
+	curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($session);
+	curl_close($session);
+	//$response = file_get_contents($request);
+	$parsed_xml = simplexml_load_string($response);
+	showCartContents($parsed_xml);	
+}
+//-------------------------------------------------------------------------------------------------------
+function showCartContents($parsed_xml){
+     print("<table>");
+     $CartId = $parsed_xml->Cart->CartId;
+     $HMAC = $parsed_xml->Cart->URLEncodedHMAC;
+     if (isset($parsed_xml->Cart->CartItems)){
+           foreach($parsed_xml->Cart->CartItems->CartItem as $current){
+                 $CartItemId = $current->CartItemId;
+                 $remove="SimpleStore.php?Action=Remove&CartId=$CartId&HMAC=$HMAC&CartItemId=$CartItemId";
+                 print("<tr><td>".$current->Title.": ".$current->Price->FormattedPrice."&nbsp;&nbsp;&nbsp;<a href=$remove>(Remove from Cart)</a></td></tr>");
+           }
+           print("<tr><td>Subtotal: ".$parsed_xml->Cart->CartItems->SubTotal->FormattedPrice."</td></tr>");
+     } else {
+   print("<tr><td>Your Cart is empty</td></tr>");
+     }
+     print("<tr><td>");
+     $continue = "SimpleStore.php?Action=Search&CartId=$CartId&HMAC=$HMAC";
+     print("<a href=$continue>Continue Shopping</a>");
+     $checkout=$parsed_xml->Cart->PurchaseURL;
+     print("&nbsp;&nbsp;&nbsp;<a href=$checkout>Checkout</a>");
+     print("</table>");
+}
+//------------------------------------------------------------------------------------------------------
+function removeFromCart($CartItemId){
+	$CartId = $_GET['CartId'];
+	$HMAC = urlencode($_GET['HMAC']);
+	$CartItemId = $_GET['CartItemId'];
+	$request = "http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=".KEYID."&AssociateTag=".AssocTag."&Version=2006-09-11&Operation=CartModify&CartId=$CartId&HMAC=$HMAC&Item.1.CartItemId=$CartItemId&Item.1.Quantity=0";
+	//The use of `file_get_contents` may not work on all servers because it relies on the ability to open remote URLs using the file manipulation functions. 
+	//PHP gives you the ability to disable this functionality in your php.ini file and many administrators do so for security reasons.
+	//If your administrator has not done so, you can comment out the following 5 lines of code and uncomment the 6th.  
+	$session = curl_init($request);
+	curl_setopt($session, CURLOPT_HEADER, false);
+	curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($session);
+	curl_close($session);
+	//$response = file_get_contents($request);
+	$parsed_xml = simplexml_load_string($response);
+	showCartContents($parsed_xml);
+}
+//-----------------------------------------------------------------------------------------------------
+function getCartContents($CartId, $HMAC){
+	$request = "http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=".KEYID."&AssociateTag=".AssocTag."&Version=2006-09-11&Operation=CartGet&CartId=$CartId&HMAC=$HMAC";
+	//The use of `file_get_contents` may not work on all servers because it relies on the ability to open remote URLs using the file manipulation functions. 
+	//PHP gives you the ability to disable this functionality in your php.ini file and many administrators do so for security reasons.
+	//If your administrator has not done so, you can comment out the following 5 lines of code and uncomment the 6th.  
+	$session = curl_init($request);
+	curl_setopt($session, CURLOPT_HEADER, false);
+	curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($session);
+	curl_close($session); 
+	//$response = file_get_contents($request);
+	$parsed_xml = simplexml_load_string($response);
+	showCartContents($parsed_xml);
+}
+?>
+</html>

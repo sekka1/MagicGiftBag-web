@@ -1,0 +1,48 @@
+<a href="/tuning/personatype">Back to personatype</a><br/><br/>
+
+<h3><?php echo $this->name; ?></h3>
+
+<b>Add Word One by One</b>
+<form method="post" action="/tuning/wordadd/method/one">
+<input type="hidden" name="persona_type_id_seq" value="<?php echo $this->persona_type_id_seq ?>"/>
+Add a word to this Persona Type: 
+<input type="text" name="word" value=""/><br/>
+Weight: <input type="text" name="weight" value="1"/><br/>
+<input type="submit" value="add"/>
+</form>
+<br/>
+<br/>
+<b>Add a list of comma separated words</b>
+<form method="post" action="/tuning/wordadd/method/two">
+<input type="hidden" name="persona_type_id_seq" value="<?php echo $this->persona_type_id_seq ?>"/>
+<textarea name="word"></textarea><br/>
+Weight: <input type="text" name="weight" value="1"/><br/>
+<input type="submit" value="add"/>
+</form>
+
+<?php
+
+echo '<table border="1">';
+echo '<tr>
+        <td>word</td>
+        <td>weight</td>
+        <td>create_datetime</td>
+        <td>modify_datetime</td>
+        <td>delete</td>
+     </tr>';
+
+foreach( $this->results as $aResult ){
+
+    echo '<tr>';
+    echo '<td>' . $aResult['word'] . '</td>';
+    echo '<td>' . $aResult['weight'] . '</td>';
+    echo '<td>' . $aResult['datetime_created'] . '</td>';
+    echo '<td>' . $aResult['datetime_modified'] . '</td>';
+    echo '<td><a href="/tuning/worddelete/persona_type_id_seq/'.$this->persona_type_id_seq.'/id_seq/'. $aResult['id_seq'] . '">Delete</a></td>';
+    echo '</tr>';
+
+}
+
+echo '</table>';
+
+?>

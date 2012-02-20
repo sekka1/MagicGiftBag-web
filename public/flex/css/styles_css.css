@@ -1,0 +1,100 @@
+/* CSS Document */
+/* css style for the links separator */
+.content1 { font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#FFFFFF; font-weight:bold; text-align:center;}
+
+/* css style for the text links home, excel, help, by ,print */
+a.navigation:link     { font: 11px Arial, Helvetica, sans-serif; font-weight : normal;  color:#FFFFFF; text-decoration: none; }
+a.navigation:active   { font: 11px Arial, Helvetica, sans-serif; font-weight : normal;  color:#FFFFFF; text-decoration: none; }
+a.navigation:visited  { font: 11px Arial, Helvetica, sans-serif; font-weight : normal;  color:#FFFFFF; text-decoration: none; }
+a.navigation:hover    { font: 11px Arial, Helvetica, sans-serif; font-weight : normal;  color:#FFFFFF; text-decoration: underline; }
+
+/* css style for the images setting images border to 0 */
+img {border:0; }
+
+/* css style for the background image of the frontend design */
+body {
+	background-image: url(../images/bg2.jpg);
+	margin-top:0;
+}
+
+/* css style for the background image of the Network Data Center Services */
+.bar { background-image:url(../images/bars9.png);
+   	   font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#FFFFFF; font-weight:bold;	
+	   }
+/* css style for the background image of the links home, excel, help, by ,print */   
+.barsmall { background-image:url(../images/bars10.png);
+
+	   }
+/* css style for the Resource Utilization */
+.bgblack {
+
+		background-image:url(../jpg/2.jpg);
+		font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#FFFFFF; font-weight:bold; text-align:center;
+
+}
+/* css style for the Storage Consumtion */
+.bgblack1 {
+
+		background-image:url(../jpg/16.jpg);
+		font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#FFFFFF; font-weight:bold; text-align:center;
+
+}
+/* css style for the Server Virtualization */
+.bgblack2 {
+
+		background-image:url(../jpg/27.jpg);
+		font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#FFFFFF; font-weight:bold; text-align:center;
+
+}
+/* css style for the % resource utilization */	   
+.bgskyblue { background-image:url(../jpg/6.jpg); 
+             font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF; font-weight:bold;
+}
+/* css style for the % storage consumption */
+.bgskyblue1 { background-image:url(../jpg/20.jpg); 
+             font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF; font-weight:bold;
+}
+/* css style for the % server virtualization */
+.bgskyblue2 { background-image:url(../jpg/31.jpg); 
+             font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF; font-weight:bold;
+}
+/* css style for the % resource utilization - by vp */
+.bgskyblue3 { background-image:url(../jpg/41.jpg); 
+             font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF; font-weight:bold;
+}
+/* css style for the % storage consumption - by vp */
+.bgskyblue4 { background-image:url(../jpg/53.jpg); 
+             font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF; font-weight:bold;
+}
+/* css style for the % server virtualization - by vp */
+.bgskyblue5 { background-image:url(../jpg/65.jpg); 
+             font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF; font-weight:bold;
+}
+/* css style for the bottom bar of the website */
+.bgdarkblue { background-image:url(../jpg/78.jpg); 
+             font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF; font-weight:bold; text-align:center;
+}
+table.generic {
+	border-width: 1px;
+	border-spacing: ;
+	border-style: outset;
+	border-color: gray;
+	border-collapse: separate;
+	background-color: rgb(128, 128, 128);
+}
+table.generic th {
+	border-width: 1px;
+	padding: 1px;
+	border-style: groove;
+	border-color: gray;
+	background-color: ;
+	-moz-border-radius: ;
+}
+table.generic td {
+	border-width: 2px;
+	padding: 1px;
+	border-style: groove;
+	border-color: black;
+	background-color: ;
+	-moz-border-radius: ;
+}

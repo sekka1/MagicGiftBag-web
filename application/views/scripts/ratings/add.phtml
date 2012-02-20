@@ -1,0 +1,21 @@
+<h1>Add an Item</h1>
+
+<form method="GET" action="/data/index/class/Crud/method/create/tableName/Items">
+
+Item name:<input type="text" name="key_name"/><br/><br/>
+<!--is_root (1=very top level; 0=any other sub category:<input type="text" name="key_is_root" value="<?php echo $this->parent_id_seq; ?>"/><br/><br/>-->
+has_child (1=true; 0=false):<input type="text" name="key_has_child"/><br/><br/>
+parent_id_seq:<input type="text" name="key_parent_id_seq" value="<?php echo $this->parent_id_seq; ?>"/><br/><br/>
+type:<select name="key_type">
+        <option value="category">category</option>
+        <option value="object">object</option>
+        <option value="object_attribute">object_attribute</option>
+    </select><br/><br/>
+weight (1-5):<input type="text" name="key_weight"/><br/><br/>
+description:<textarea name="key_description"></textarea><br/><br/>
+url:<input type="text" name="key_url"/><br/><br/>
+pic:<input type="text" name="key_pic"/><br/><br/>
+<input type="hidden" name="key_datetime_created" value="now()"/>
+<input type="hidden" name="key_datetime_modified" value="now()"/>
+<input type="submit" value="add"/><br/><br/>
+</form>

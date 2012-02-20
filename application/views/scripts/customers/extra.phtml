@@ -1,0 +1,185 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Extra Services</title>
+    <link rel="stylesheet" type="text/css" href="/extjs/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="/extjs/css/grid-examples.css" />
+    <!-- Common Styles for the examples -->
+    <link rel="stylesheet" type="text/css" href="/extjs/css/examples.css" />
+    <link rel="stylesheet" type="text/css" href="/extjs/css/RowEditor.css" />
+
+	<style type="text/css">
+		.x-grid3 .x-window-ml{
+			padding-left: 0;	
+		} 
+		.x-grid3 .x-window-mr {
+			padding-right: 0;
+		} 
+		.x-grid3 .x-window-tl {
+			padding-left: 0;
+		} 
+		.x-grid3 .x-window-tr {
+			padding-right: 0;
+		} 
+		.x-grid3 .x-window-tc .x-window-header {
+			height: 3px;
+			padding:0;
+			overflow:hidden;
+		} 
+		.x-grid3 .x-window-mc {
+			border-width: 0;
+			background: #cdd9e8;
+		} 
+		.x-grid3 .x-window-bl {
+			padding-left: 0;
+		} 
+		.x-grid3 .x-window-br {
+			padding-right: 0;
+		}
+		.x-grid3 .x-panel-btns {
+			padding:0;
+		}
+		.x-grid3 .x-panel-btns td.x-toolbar-cell {
+			padding:3px 3px 0;
+		}
+		.x-box-inner {
+			zoom:1;
+		}
+        .icon-user-add {
+            background-image: url(/extjs/pic/user_add.gif) !important;
+        }
+        .icon-user-delete {
+            background-image: url(/extjs/pic/user_delete.gif) !important;
+        }        
+    </style>
+    
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"> </script><script type="text/javascript">_uacct = "UA-1396058-1";urchinTracker();</script><!-- LIBS -->
+    <script type="text/javascript" src="/extjs/ext-base.js"></script>
+    <script type="text/javascript" src="/extjs/ext-all.js"></script>
+    <script type="text/javascript" src="/extjs/gen-names.js"></script>
+    <script type="text/javascript" src="/extjs/RowEditor.js"></script>
+    <!--<script type="text/javascript" src="/extjs/row-editor.js"></script>-->
+
+    <script type="text/javascript">
+
+	Ext.onReady(function(){
+
+		//Ext.Msg.alert('Status', 'Changes saved successfully.');
+
+		// Used for adding a record into the grid
+		var Software = Ext.data.Record.create([
+			{ name: 'type_of_service', type: 'string' },
+			{ name: 'explanation_of_service', type: 'string' },
+			{ name: 'design_document_script_filename', type: 'string' }
+		]);
+
+		// Create the inline editor
+		var editor = new Ext.ux.grid.RowEditor({
+        		saveText: 'Update'
+    		});
+
+		// create the data store
+		var store = new Ext.data.JsonStore({
+			url: '/customers/extraget/id/<?php echo $this->customer_id_seq ?>',
+			fields: [
+				{name: 'id_seq', type: 'int'},
+				'type_of_service', 'explanation_of_service', 'design_document_script_filename'
+			]
+		});
+	
+		// load data from the url 
+		store.load();
+
+		// create the Grid
+		var grid = new Ext.grid.GridPanel({
+			store: store,
+			plugins: [editor],
+			columns: [
+				new Ext.grid.RowNumberer(),
+				{id:'id_seq',header: 'ID', width: 30, sortable: true, dataIndex: 'id_seq'},
+				{header: 'type_of_service', width: 150, sortable: true, dataIndex: 'type_of_service', editor: { xtype: 'textfield', allowBlank: false } },
+				{header: 'explanation_of_service', width: 350, sortable: true, dataIndex: 'explanation_of_service', editor: { xtype: 'textfield', allowBlank: false } },
+				{header: 'design_document_script_filename', width: 200, sortable: true, dataIndex: 'design_document_script_filename', editor: { xtype: 'textfield', allowBlank: false } }
+			],
+			stripeRows: true,
+			//height:250,
+			autoHeight: true,
+			//width:900,
+			autoWidth: true,
+			autoScroll: true,
+			title:'Extra Services - <?php echo $this->name; ?>',
+			tbar: [{
+            			iconCls: 'icon-user-add',
+            			text: 'Add',
+            			handler: function(){
+                			var e = new Software({
+                    				equipment: '',
+                    				serial_number: '',
+                    				site_name: ''
+                			});
+                			editor.stopEditing();
+
+					// Add our new record as the first row, select it
+                			store.insert(0, e);
+                			grid.getView().refresh();
+                			grid.getSelectionModel().selectRow(0);
+
+					// Start editing the new row
+                			editor.startEditing(0);
+            			}
+        		},{
+            			ref: '../removeBtn',
+            			iconCls: 'icon-user-delete',
+            			text: 'Remove',
+            			disabled: false,
+            			handler: function(){
+                			editor.stopEditing();
+					var s = grid.getSelectionModel().getSelected();
+					var id_seq = s.get( 'id_seq' );
+					// Delete Selected
+					Ext.Ajax.request({
+						url: '/customers/extradelete/id_seq/' + id_seq,
+						method: 'GET',
+						success: function(){
+							store.reload();
+						}
+					});
+            			}
+        		},{
+                                iconCls: 'icon-user-delete',
+                                text: 'Home',
+                                disabled: false,
+                                handler: function(){
+					// Capture the button click then get which row it is on
+					//var s = grid.getSelectionModel().getSelected();
+					//var id_seq = s.get( 'id_seq' );
+					//Ext.Msg.alert('Status', id_seq);	
+					window.location = '/customers/index';
+                                }
+                        }]
+		});
+
+		// Listener for after editing a row
+		editor.on({
+			scope: this,
+			afteredit: function(roweditor, changes, record, rowIndex) {
+				Ext.Ajax.request({
+					url: '/customers/extraadd/id/<?php echo $this->customer_id_seq ?>/id_seq/' + record.get( 'id_seq' ),
+					method: 'GET',
+					params: changes,
+					success: function(){
+						store.reload();	
+					}
+				});
+			}
+		});
+
+		// render grid
+		grid.render('the-grid');
+	});
+    </script>
+</head>
+<body>
+	<div id="the-grid"></div>
+</body>
+</html>

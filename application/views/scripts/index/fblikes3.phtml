@@ -1,0 +1,561 @@
+<?php
+/**
+ * Copyright 2011 Facebook, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+// For Facebook API
+require '../public/src/facebook.php';
+
+// For Amazon API
+defined('AWS_API_KEY') or define('AWS_API_KEY', 'AKIAJO6OOIFG3LCMZPGA');
+defined('AWS_API_SECRET_KEY') or define('AWS_API_SECRET_KEY', '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');
+defined('AWS_ASSOCIATE_TAG') or define('AWS_ASSOCIATE_TAG', 'wedvite-20');
+
+require '/usr/local/zend/apache2/htdocs/wedvite.us/public/public/amazon/Exeu-Amazon-ECS-PHP-Library-5cda219/lib/AmazonECS.class.php';
+
+
+/////////////////////////
+// Weight Constants
+/////////////////////////
+define('ARTS_ENTERTAINMENT_NIGHTLIFE', '0.3');
+define('ARTS_HUMANITIES', '1');
+define('ACTOR_DIRECTOR', '1');
+define('ALBUM', '1');
+define('AMATEUR_SPORTS_TEAM', '1');
+define('ANIMAL', '0.5');
+define('APPLICATION', '0.1');
+define('ARTIST', '1');
+define('ATHLETE', '1.5');
+define('ATTRACTIONS_THINGS_TO_DO', '1');
+define('AUTHOR', '1');
+define('AUTOMOBILES_AND_PARTS', '1');
+define('BAGS_LUGGAGE', '1'); 
+define('BAR', '0.1');
+define('BOOK', '0.2');
+define('BOOK_GENRE', '0.2');
+define('CARS', '1');
+define('CAUSE', '1');
+define('CHEF', '2');
+define('CHURCH_RELIGIOUS_ORGANIZATION', '0.5');
+define('CITY', '0.3');
+define('CLOTHING', '8');
+define('CLUB', '0.1');
+define('COMEDIAN', '1'); 
+define('COMPANY', '1');
+define('COMPUTERS_INTERNET', '1');
+define('COMPUTERS_TECHNOLOGY', '1');
+define('COMMUNITY', '1');
+define('CONCERT_TOUR', '0.1');
+define('CONCERT_VENUE', '0.1');
+define('CONSULTING_BUSINESS_SERVICES', '1');
+define('DANCER', '1');
+define('EDITOR', '1');
+define('EDUCATION', '0.5');
+define('ENTERTAINMENT', '0.7');
+define('ENTERTAINER', '0.7');
+define('FICTIONAL_CHARACTER', '1');
+define('FIELD_OF_STUDY', '1');
+define('FOOD_BEVERAGES', '0.2');
+define('FOOD_GROCERY', '0.2');
+define('GAMES_TOYS', '5');
+define('GOVERNMENT_OFFICIAL', '0.5');
+define('GOVERNMENT_ORGANIZATIONS', '0.5');
+define('HEALTH_BEAUTY', '1');
+define('HEALTH_MEDICAL_PHARMACY', '1');
+define('HEALTH_WELLNESS', '1');
+define('HOME_DECOR', '1');
+define('HOME_GARDEN', '1');
+define('HOSPITAL_CLINIC', '1');
+define('HOTEL', '1');
+define('INTEREST', '1');
+define('INTERNET_SOFTWARE', '1');
+define('JEWELRY_WATCHES', '8');
+define('KITCHEN_COOKING', '1');
+define('LANDMARK', '0.7');
+define('LIBRARY', '0.7');
+define('LOCAL_BUSINESS', '0.1');
+define('LOCAL_TRAVEL', '0.1');
+define('MEDIA_NEWS_PUBLISHING', '0.7');
+define('MOVIE', '0.3');
+define('MOVIE_GENRE', '0.3');
+define('MOVIES_MUSIC', '0.3');
+define('MUSEUM_ART_GALLERY', '1');
+define('MUSIC', '0.1');
+define('MUSICIAN_BAND', '0.1');
+define('MUSICAL_GENRE', '0.1');
+define('NEWS_MEDIA', '1');
+define('NON_PROFIT_ORGANIZATION', '1');
+define('OFFICE_SUPPLIES', '1');
+define('ORGANIZATION', '0.1');
+define('OUTDOOR_GEAR_SPORTING_GOODS', '6');
+define('PET_SERVICES', '0.5');
+define('PET_SUPPLIES', '0.5');
+define('PERSONAL_BLOG', '0.5');
+define('PERSONAL_WEBSITE', '0.2');
+define('POLITICAL_ORGANIZATION', '0.5');
+define('POLITICIAN', '0.5');
+define('PRODUCER', '1');
+define('PRODUCT_SERVICE', '5');
+define('PROFESSIONAL_SERVICES', '0.6');
+define('PROFESSIONAL_SPORTS_TEAM', '4');
+define('PUBLIC_FIGURE', '1');
+define('PUBLIC_FIGURES', '1');
+define('RADIO_STATION', '1');
+define('REAL_ESTATE', '1');
+define('RECORD_LABEL', '1');
+define('RECREATION_SPORTS', '1');
+define('RESTAURANT_CAFE', '0.1');
+define('RETAIL_AND_CONSUMER_MERCHANDISE', '5');
+define('SCHOOL', '0.6');
+define('SCHOOL_SPORTS_TEAM', '0.6');
+define('SHOPPING_RETAIL', '1');
+define('SMALL_BUSINESS', '1');
+define('SOCIETY_CULTURE', '1');
+define('SOFTWARE', '1');
+define('SONG', '1');
+define('SPAS_BEAUTY_PERSONAL_CARE', '1');
+define('SPORT', '1'); 
+define('SPORTS_LEAGUE', '1');
+define('SPORTS_RECREATION_ACTIVITIES', '5');
+define('STUDIO', '1');
+define('TEACHER', '1');
+define('TEENS_KIDS', '1');
+define('TELECOMMUNICATION', '0.2');
+define('TRAVEL_LEISURE', '1');
+define('TOURS_SIGHTSEEING', '0.5');
+define('TV', '1'); 
+define('TV_NETWORK', '1');
+define('TV_SHOW', '0.3');
+define('UNIVERSITY', '1');
+define('UNKNOWN', '0.5');
+define('WEBSITE', '0.5');
+define('WINE_SPIRITS', '1');
+define('WRITER', '1');
+
+// Create our Application instance (replace this with your appId and secret).
+$facebook = new Facebook(array(
+  'appId'  => '197440486945083',
+  'secret' => 'ac5377e0d6f60fc22219fd4ea79227ed',
+));
+
+// Get User ID
+$user = $facebook->getUser();
+
+// We may or may not have this data based on whether the user is logged in.
+//
+// If we have a $user id here, it means we know the user is logged into
+// Facebook, but we don't know if the access token is valid. An access
+// token is invalid if the user logged out of Facebook.
+
+if ($user) {
+  try {
+    // Proceed knowing you have a logged in user who's authenticated.
+    $user_profile = $facebook->api('/me');
+  } catch (FacebookApiException $e) {
+    error_log($e);
+    $user = null;
+  }
+}
+
+// Login or logout url will be needed depending on current user state.
+if ($user) {
+  $logoutUrl = $facebook->getLogoutUrl();
+} else {
+  $loginUrl = $facebook->getLoginUrl( array('req_perms' => 'user_status,publish_stream, user_photos, friends_photos, friends_status, user_videos, friends_videos, read_stream, read_friendlists, manage_friendlists, read_requests, user_checkins, friends_checkins, user_likes, friends_likes,friends_about_me, friends_activities, friends_education_history, friends_events, friends_hometown, friends_interests, friends_relationships, friends_relationship_details, friends_religion_politics' ) );
+}
+
+?>
+<!doctype html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
+  <head>
+    <title>Friends Lists</title>
+    <style>
+      body {
+        font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
+      }
+      h1 a {
+        text-decoration: none;
+        color: #3b5998;
+      }
+      h1 a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Gift Spark</h1>
+
+    <?php if ($user): ?>
+      <a href="<?php echo $logoutUrl; ?>">Logout</a>
+    <?php else: ?>
+      <div>
+        Login using OAuth 2.0 handled by the PHP SDK:
+        <a href="<?php echo $loginUrl; ?>">Login with Facebook</a>
+      </div>
+    <?php endif ?>
+
+
+<?php
+
+$users_likesList;
+
+if ($user){
+// User is logged in
+
+    if( $this->user_id != '' ){
+    // Get all of this friends likes
+
+        try {
+
+            // Show this friend's profile pic
+            echo '<br/><br/><img src="https://graph.facebook.com/' . $this->user_id . '/picture"><br/><br/>';
+
+            // Show this friend's user's info
+            $friends_info = $facebook->api('/' . $this->user_id );
+
+            echo '<h3>User Info</h3>';
+            print_r( $friends_info );
+            echo '<br/><br/>';
+
+            // Show this friend's Moves
+            $friends_movies = $facebook->api('/' . $this->user_id . '/movies');
+
+            echo '<h3>Movies</h3>';
+            print_r( $friends_movies );
+            echo '<br/><br/>';
+
+            // Show this friend's Books
+            $friends_books = $facebook->api('/' . $this->user_id . '/books');
+
+            echo '<h3>Books</h3>';
+            print_r( $friends_books );
+            echo '<br/><br/>';
+            
+            // Show this friend's Music
+            $friends_music = $facebook->api('/' . $this->user_id . '/music');
+
+            echo '<h3>Music</h3>';
+            print_r( $friends_music );
+            echo '<br/><br/>';
+
+            // Show this friend's TV
+            $friends_tv = $facebook->api('/' . $this->user_id . '/television');
+
+            echo '<h3>TV</h3>';
+            print_r( $friends_tv );
+            echo '<br/><br/>';
+
+            // Show this friend's Activities and interest
+            $friends_activities = $facebook->api('/' . $this->user_id . '/activities');
+
+            echo '<h3>Activities and Interest</h3>';
+            print_r( $friends_activities );
+            echo '<br/><br/>';
+
+            // Getting a list of this user's likes
+            $users_likesList = $facebook->api('/'.$this->user_id.'/likes');
+
+            echo '<h3>Likes</h3>';
+            print_r( $users_likesList );
+
+            $likesCategorized = sumUpLikesCategories( $users_likesList );
+
+            echo '<h3> likesCategorized</h3>';
+            print_r( $likesCategorized );
+
+            $topCategorySorted = sortTopCategories( $likesCategorized );
+
+            echo '<h3>Top Categorys sorted</h3>';
+            print_r( $topCategorySorted );
+
+            echo '<h3>Top Categorys sorted and filter-weighted</h3>';
+            $topCategorySorted = filter_weightCategory( $topCategorySorted );
+    
+            print_r( $topCategorySorted );
+
+            echo '<h3>Top 5 Category Hits and 3 items in each category</h3>';
+            $topCategoriesHits = getTopXCategorySearchTerms( $topCategorySorted, $likesCategorized, $users_likesList );
+
+            // Put it through the augment maniplulation filter to augment the search terms if needed
+            $topCategoriesHits = manipulate_augmentSearchTerm( $topCategoriesHits );
+
+            print_r( $topCategoriesHits );
+
+            echo '<h3>Amazon Search Results</h3>';
+            searchAmazon( $topCategoriesHits );
+
+        } catch (FacebookApiException $e) {
+                error_log($e);
+        }
+
+    } else {
+    // Show a list of all this user's friends
+
+        try {
+                // Print loggined in User's Profile here
+                echo '<br/><br/><img src="https://graph.facebook.com/' . $user . '/picture"><br/><br/>';
+
+                print_r($user_profile);
+                echo '<br/><br/>';
+
+                // Get Friends List
+                $user_friendslist = $facebook->api('/me/friends');
+
+//                print_r( $user_friendslist );
+
+                // Print out friends list
+                foreach( $user_friendslist['data'] as $aFriend ){
+
+                    echo '<a href="/index/fblikes3/user/' . $aFriend['id'] . '?session='. urlencode( $this->fb_session ) .'">' . $aFriend['name'] . '</a><br/>';
+                }
+
+        } catch (FacebookApiException $e) {
+                error_log($e);
+                $user = null;
+        }
+    }
+} // User login
+
+function sumUpLikesCategories( $users_likesList ){
+
+    $categoryListNames = array(); // List of category names found
+    $categoryArraySpot = array(); // List of which array spot each category is in the $users_likesList
+
+    // Tally all the category and which array spot belongs in each category
+    for( $i = 0; $i < count( $users_likesList['data'] ); $i++ ){
+
+        //if( checkNotInOmitCategory( $users_likesList['data'][$i]['category'] ) ){
+
+            if( in_array( $users_likesList['data'][$i]['category'], $categoryListNames ) ){
+            // Already found it once.  Put it into the $categoryArraySpot
+ 
+                array_push( $categoryArraySpot[$users_likesList['data'][$i]['category']], $i );
+            } else {
+            // First time seeing this category
+
+                array_push( $categoryListNames, $users_likesList['data'][$i]['category'] );
+                $categoryArraySpot[$users_likesList['data'][$i]['category']][0] = $i;
+    
+            }
+        //}
+    }
+
+    //print_r( $categoryListNames );
+    //print_r( $categoryArraySpot );
+
+    return $categoryArraySpot;
+}
+
+/*
+Lets not use this and use the weights for each category instead
+function checkNotInOmitCategory( $category_name ){
+// Returns false if we want to omit this category
+
+    $doOmit = true;
+
+    $omit = array( 'Movie', 'Musician/band', 'Restaurant/cafe', 'Food/beverages' );
+
+    if( in_array( $category_name, $omit ) )
+        $doOmit = false;
+
+    return $doOmit;
+
+}
+*/
+
+function sortTopCategories( $categoryArraySpot ){
+
+    $categoryCountList = array();
+
+    // Count up how many times each category name shows up
+    foreach( $categoryArraySpot as $key => $aCategory ){
+
+        $categoryCountList[$key] = $count = count( $aCategory );
+    }
+
+    arsort( $categoryCountList );
+    //print_r( $categoryCountList );
+
+    return $categoryCountList; 
+
+}
+function getTopXCategorySearchTerms( $topCategorySorted, $likesCategorized, $users_likesList ){
+// Given a the sorted list of top categories and the $likesCategorized of where each like is in the
+// $users_likesList array this will bring back the top X category and the values for them
+
+            $getXCategories = 10; // Get the top x category
+            $getXForeachCategory = 4; // For each category get the top hits
+
+            $topCategoriesHits = array(); // Holds the category and the search name for the top X
+            $i=0;
+
+            // Go through the top category list which holds the categorized list of likes
+            foreach( $topCategorySorted as $key=>$val ){
+
+                // Show the top 5 categories
+                if( $i < $getXCategories ){
+                    $n = 0;
+
+                    // Get the array spots that this category is in
+                    foreach( $likesCategorized[$key] as $arraySpot ){
+
+                        // Only show the top 3 for each category
+                        if( $n < $getXForeachCategory ){
+
+                            array_push( $topCategoriesHits, $users_likesList['data'][$arraySpot] );
+                        }
+
+                        $n++;
+                    }
+                }
+    
+                $i++;
+            }
+
+            //print_r( $topCategoriesHits );
+
+            return $topCategoriesHits;
+}
+
+function searchAmazon( $topCategoriesHits ){
+// Takes an input from getTopXCategorySearchTerms();
+
+try
+{
+    // get a new object with your API Key and secret key. Lang is optional.
+    // if you leave lang blank it will be US.
+    $amazonEcs = new AmazonECS(AWS_API_KEY, AWS_API_SECRET_KEY, 'de', AWS_ASSOCIATE_TAG);
+
+    // for the new version of the wsdl its required to provide a associate Tag
+    // @see https://affiliate-program.amazon.com/gp/advertising/api/detail/api-changes.html?ie=UTF8&pf_rd_t=501&ref_=amb_link_83957571_2&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=&pf_rd_s=assoc-center-1&pf_rd_r=&pf_rd_i=assoc-api-detail-2-v2
+    // you can set it with the setter function or as the fourth paramameter of ther constructor above
+    $amazonEcs->associateTag(AWS_ASSOCIATE_TAG);
+
+    // from now on you want to have pure arrays as response
+    $amazonEcs->returnType(AmazonECS::RETURN_TYPE_ARRAY);
+
+    foreach( $topCategoriesHits as $aSearchHit ){
+
+        // Make querie to amazon for this search item
+        $response = $amazonEcs->country('com')->category('All')->responseGroup('Large')->search($aSearchHit['name']);
+
+        echo '<br/>Search name: ' . $aSearchHit['name'] . '<br/>';
+        displayAmazonItem( $response, 3 );
+        
+    }
+
+}
+catch(Exception $e)
+{
+  echo $e->getMessage();
+}
+
+}
+
+function displayAmazonItem( $amazon_response, $numberOfItems ){
+// Takes in the entire reponse array from the amazon search
+//  $numberOfItems is how many item to display
+
+    for( $i=0; $i < $numberOfItems; $i++){
+
+        if( !isset( $amazon_response['Items']['Request']['Errors']['Error'] ) ){
+            echo '<br/><br/>';
+
+            if( isset( $amazon_response['Items']['Item'][$i] ) ){
+
+                // Only display items that we have not thrown out
+                if( filter_checkDisplayItem( $amazon_response['Items']['Item'][$i] ) ){
+
+                    if( isset( $amazon_response['Items']['Item'][$i]['ItemAttributes']['Title'] ) )
+                        echo '<h5>Item: ' . $amazon_response['Items']['Item'][$i]['ItemAttributes']['Title'] . '</h5>';
+
+                    if( isset( $amazon_response['Items']['Item'][$i]['MediumImage']['URL'] ) )
+                        echo '<img src="' . $amazon_response['Items']['Item'][$i]['MediumImage']['URL'] . '"/>';
+
+                    if( isset( $amazon_response['Items']['Item'][$i]['DetailPageURL'] ) )
+                        echo '<a href="' . $amazon_response['Items']['Item'][$i]['DetailPageURL'] . '">item link</a>';
+
+                } 
+            }
+        echo '<hr />';
+        } else {
+            echo '<br/>No Results found for this search term<br/>';
+        }
+    }
+
+}
+
+function filter_checkDisplayItem( $aItem ){
+// This filter is here for us to throw out items and not display them
+//
+// True = display item; False = dont display item
+// Takes in an "Item" from the amazon search response
+
+    $displayItem = true;
+
+    if( isset( $aItem['ItemAttributes']['ProductGroup'] ) ){
+        if( $aItem['ItemAttributes']['ProductGroup'] == 'Book' ){
+            $displayItem = false;
+            echo 'Threw out a book:'.$aItem['ItemAttributes']['Title'].'<br/>';
+        }
+    }
+
+    return $displayItem;
+} 
+
+function filter_weightCategory( $topCategorySorted ){
+// This filter takes in an output array from $topCategorySorted.
+// [Musician/band] => 86
+// [Movie] => 23
+// For each category the value is just multiplied by some value to get a 
+// new value.  
+
+    foreach( $topCategorySorted as $key=>$val ){
+
+        $tmp_str = str_replace( ' ', '_', $key );
+        $tmp_str = str_replace( '/', '_', $tmp_str );
+        $tmp_str = str_replace( '-', '_', $tmp_str );
+        $tmp_str = strtoupper( $tmp_str );
+    
+        $topCategorySorted[$key] = $val * constant( $tmp_str );
+    }
+
+    // Re-sort the array before returning it.  The order might change
+    arsort( $topCategorySorted );
+
+    return $topCategorySorted;
+
+}
+
+function manipulate_augmentSearchTerm( $topCategoriesHits ){
+// Will look through the result set and for certain category a word will be added to the name of the like to narrow the search down more.
+//
+// Takes in the return array from getTopXCategorySearchTerms
+
+    // Loop through each like and see if we need to augment the search term (aka 'name') value
+    for( $i = 0; $i < count( $topCategoriesHits ); $i++ ){
+
+        if( $topCategoriesHits[$i]['category'] == 'Record label' ){ $topCategoriesHits[$i]['name'] = 'music ' . $topCategoriesHits[$i]['name']; }
+
+    }
+
+    return $topCategoriesHits;
+}
+
+?>
+
+  </body>
+</html>
+

@@ -1,0 +1,84 @@
+<html>
+<head>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '146836712079037', // App ID
+//      channelURL : 'http://magicgiftbag.com/index/channel', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      oauth      : true, // enable OAuth 2.0
+      xfbml      : true  // parse XFBML
+    });
+
+    // Additional initialization code here
+  };
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     d.getElementsByTagName('head')[0].appendChild(js);
+   }(document));
+
+</script>
+
+</head>
+<body>
+<div id="fb-root"></div>
+
+
+<fb:login-button scope="user_about_me, user_activities, user_birthday, user_education_history, user_events, user_groups, user_hometown, user_interests, user_likes, user_location, user_relationships, user_relationship_details, user_religion_politics, user_status, read_friendlists, read_insights, read_stream, user_checkins, friends_about_me, friends_activities, friends_birthday, friends_education_history, friends_events, friends_groups, friends_hometown, friends_interests, friends_likes, friends_location, friends_relationships, friends_relationship_details, friends_religion_politics, friends_status, friends_work_history, friends_checkins, publish_stream, publish_checkins">Login with Facebook</fb:login-button>
+
+<?php
+
+    // Show a list of all this user's friends
+
+try {
+    // Print loggined in User's Profile here
+    //echo '<br/><br/><img src="https://graph.facebook.com/' . $user_profile['id'] . '/picture"><br/><br/>';
+
+    //print_r($user_profile);
+    echo '<br/><br/>';
+
+    // Get Friends List
+    $user_friendslist = $this->facebook->api('/me/friends');
+
+    //                print_r( $user_friendslist );
+
+    echo '<table border="1">';
+    echo '<tr>
+            <td>Friend\'s Name</td>
+            <td>List of Items Layout</td>
+            <td>Search Term Layout</td>
+            <td>Persona Type</td>
+          </tr>';    
+
+    // Print out "Me"
+        echo '<tr><td>Me</td>';                                                                           
+        echo '<td><a href="/gift/one/user/me">one</a></td>';                                                
+        echo '<td><a href="/gift/two/user/me">two</a></td>';                                                
+        echo '<td><a href="/gift/three/user/me">three</a></td>';                                            
+        echo '</tr>';     
+
+    // Print out friends list
+    foreach( $user_friendslist['data'] as $aFriend ){
+ 
+        echo '<tr><td>' . $aFriend['name'] . '</td>';
+        echo '<td><a href="/gift/one/user/' . $aFriend['id'] . '">one</a></td>';
+        echo '<td><a href="/gift/two/user/' . $aFriend['id'] . '">two</a></td>';
+        echo '<td><a href="/gift/three/user/' . $aFriend['id'] . '">three</a></td>';
+        echo '</tr>';
+    }
+
+    echo '</table>';
+
+} catch (FacebookApiException $e) {
+    error_log($e);
+    $user = null;
+}
+
+?>
+</body>
+</html>

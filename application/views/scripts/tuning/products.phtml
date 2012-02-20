@@ -1,0 +1,63 @@
+<a href="/tuning/personatype">Back to personatype</a><br/><br/>
+
+<h3><?php echo $this->name; ?></h3>
+
+<form method="post" action="/tuning/productadd">
+<input type="hidden" name="persona_type_id_seq" value="<?php echo $this->persona_type_id_seq ?>"/>
+Internal_name: <input type="text" name="internal_name" value=""/><br/>
+vendor_product_id:<input type="text" name="vendor_product_id" value=""/><br/>
+<!--
+name: <input type="text" name="name"/><br/>
+price: <input type="text" name="price" value="$"/><br/>
+url: <input type="text" name="url"/><br/>
+description: <input type="text" name="description"/><br/>
+img_small: <input type="text" name="img_small"/><br/>
+img_medium: <input type="text" name="img_medium"/><br/>
+img_large: <input type="text" name="img_large"/><br/>
+-->
+is_active: <input type="text" name="is_active" value="1"/><br/>
+<input type="submit" value="add"/>
+</form>
+
+<?php
+
+echo '<table border="1">';
+echo '<tr>
+        <td>internal_name</td>
+        <td>vendor_product_id</td>
+        <td>name</td>
+        <td>price</td>
+        <td>url</td>
+        <td>description</td>
+        <td>img_small</td>
+        <td>img_medium</td>
+        <td>img_large</td>
+        <td>is_active</td>
+        <td>create_datetime</td>
+        <td>modify_datetime</td>
+        <td>delete</td>
+     </tr>';
+
+foreach( $this->results as $aResult ){
+
+    echo '<tr>';
+    echo '<td>' . $aResult['internal_name'] . '</td>';
+    echo '<td>' . $aResult['vendor_product_id'] . '</td>';
+    echo '<td>' . $aResult['name'] . '</td>';
+    echo '<td>' . $aResult['price'] . '</td>';
+    echo '<td><a href="' . $aResult['url'] . '">Product Link</a></td>';
+    echo '<td>' . $aResult['description'] . '</td>';
+    echo '<td><img src="' . $aResult['img_small'] . '"/></td>';
+    echo '<td><img src="' . $aResult['img_medium'] . '"/></td>';
+    echo '<td><img src="' . $aResult['img_large'] . '"/></td>';
+    echo '<td>' . $aResult['is_active'] . '</td>';
+    echo '<td>' . $aResult['datetime_created'] . '</td>';
+    echo '<td>' . $aResult['datetime_modified'] . '</td>';
+    echo '<td><a href="/tuning/productdelete/persona_type_id_seq/'.$this->persona_type_id_seq.'/id_seq/'. $aResult['id_seq'] . '">Delete</a></td>';
+    echo '</tr>';
+
+}
+
+echo '</table>';
+
+?>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FusionCharts v3 Documentation</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+</head>
+
+<body>
+<table width="98%" border="0" cellspacing="0" cellpadding="3" align="center">
+  <tr> 
+    <td><span class="pageHeader">Using Multi-lingual text in FusionCharts </span></td>
+  </tr>
+  <tr> 
+    <td valign="top" class="text"><p>&nbsp;</p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>FusionCharts allows you to use multi-lingual (UTF-8) characters on the charts. Shown below is an example where we've used Arabic names on the chart:</p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><img src="Images/SpChar_1.jpg" width="460" height="210" /></td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>You can use multi-lingual characters in all the charts in FusionCharts v3 suite. However, <strong>any rotated text on chart cannot show non-English characters</strong>. That is, if you want to use multi-lingual characters, you'll need to show horizontal x-axis labels and y-axis name (using <span class="codeInline">&lt;chart rotateYAxisName='0' ..&gt;</span>). </p>
+      <p class="highlightBlock">FusionCharts supports only left-to-right languages as of now. It doesn't have native support for right-to-left languages like Hebrew. So, if you want to use Hebrew with FusionCharts, you'll have to programatically change the text sequence and then provide the data to FusionCharts. </p>    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" class="header">How to use multi-lingual characters? </td>
+  </tr>
+  <tr>
+    <td valign="top" class="text"><p>To use multi-lingual characters on the chart,<strong> you necessarily need to use dataURL method</strong>. dataXML method would give &quot;Invalid XML&quot; error when using multi-lingual characters on certain occasions.</p>
+      <p>If you're using a physical XML file, make sure it's saved in UTF-8 format. </p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

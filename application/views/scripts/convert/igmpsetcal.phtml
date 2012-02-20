@@ -1,0 +1,60 @@
+<?php
+
+if( $this->pick ){
+	// Show the set form
+
+	echo '<form action="/convert/igmpsetcal/auth/videomonitoring" method="POST">';
+
+	echo '<table class="generic"><tr><td>';
+
+	echo '<input type="checkbox" name="all_group" value="1"/>All Group<br/>';
+
+	echo '<input type="checkbox" name="set_1" value="2"/>Set 1<br/>';
+
+	echo '<input type="checkbox" name="set_2" value="4"/>Set 2<br/>';
+
+	echo '<input type="checkbox" name="set_3" value="8"/>Set 3<br/>';
+
+	echo '<input type="checkbox" name="set_4" value="16"/>Set 4<br/>';
+
+	echo '<input type="checkbox" name="set_5" value="32"/>Set 5<br/>';
+
+	echo '<input type="checkbox" name="set_6" value="64"/>Set 6<br/>';
+
+	echo '<input type="checkbox" name="set_7" value="128"/>Set 7<br/>';
+
+	echo '<input type="checkbox" name="set_8" value="256"/>Set 8<br/>';
+
+	echo '<input type="checkbox" name="set_9" value="512"/>Set 9<br/>';
+
+	echo '<input type="checkbox" name="set_10" value="1024"/>Set 10<br/>';
+
+	echo '<input type="checkbox" name="set_11" value="2048"/>Set 11<br/>';
+
+	echo '<input type="checkbox" name="set_12" value="4096"/>Set 12<br/>';
+
+	echo '<input type="checkbox" name="set_13" value="8192"/>Set 13<br/>';
+
+	echo '<input type="checkbox" name="set_14" value="16384"/>Set 14<br/>';
+
+	echo '<input type="checkbox" name="set_15" value="32768"/>Set 15<br/>';
+
+	echo '</td></tr><tr><td>';
+
+	echo '<input type="submit" name="submit14" value="submit"/>';
+
+	echo '</td></tr></table>';
+
+	echo "</form>";
+
+} else {
+	//Show the results
+
+	echo '<table class="generic">';
+
+	echo '<tr><td>IGMP #</td><td>' . $this->igmp_number . '</td></tr>';
+
+	echo '</table>';
+
+}
+?>

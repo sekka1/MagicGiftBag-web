@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Fusioncharts::DbExampleController</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Fusioncharts::DbExampleController</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/app/controllers/fusioncharts/db_example_controller_rb.html">
+                app/controllers/fusioncharts/db_example_controller.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="../ApplicationController.html">
+                ApplicationController
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+There are two examples in this controller. *Pie-chart for total ouput
+quantities of each factory by getting data from database and using dataXML
+method *Pie-chart for total ouput quantities of each factory and a link to
+another chart which gives <a
+href="DbExampleController.html#M000004">detailed</a> information for
+selected factory All the views related to this controller will use the
+&quot;common&quot; layout. As per Ruby On Rails conventions, we have the
+corresponding views with the same name as the function name in the
+controller.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000002">basic_dbexample</a>&nbsp;&nbsp;
+      <a href="#M000003">default</a>&nbsp;&nbsp;
+      <a href="#M000004">detailed</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">basic_dbexample</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This action retrieves the values from the database and constructs an array
+to hold, factory name and corresponding total output quantity. The view for
+this action <a href="DbExampleController.html#M000002">basic_dbexample</a>
+will use the array values to construct the xml for this chart. To build the
+xml, the view takes help from the builder file
+(basic_factories_quantity.builder)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/fusioncharts/db_example_controller.rb, line 16</span>
+16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">basic_dbexample</span>
+17:       <span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;content-type&quot;</span>]=<span class="ruby-value str">&quot;text/html&quot;</span>;
+18:       <span class="ruby-ivar">@factory_data</span> = [] 
+19:       <span class="ruby-comment cmt">#Get data from factory masters table</span>
+20:       
+21:       <span class="ruby-identifier">factory_masters</span> = <span class="ruby-constant">Fusioncharts</span><span class="ruby-operator">::</span><span class="ruby-constant">FactoryMaster</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>)
+22:       <span class="ruby-identifier">factory_masters</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">factory_master</span><span class="ruby-operator">|</span> 
+23:           <span class="ruby-identifier">total</span> = <span class="ruby-value">0</span><span class="ruby-value">.0</span>
+24:           <span class="ruby-identifier">factory_id</span> = <span class="ruby-identifier">factory_master</span>.<span class="ruby-identifier">id</span>
+25:           <span class="ruby-identifier">factory_name</span> = <span class="ruby-identifier">factory_master</span>.<span class="ruby-identifier">name</span>
+26:           <span class="ruby-identifier">factory_master</span>.<span class="ruby-identifier">factory_output_quantities</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">factory_output</span><span class="ruby-operator">|</span>
+27:                   <span class="ruby-identifier">total</span> = <span class="ruby-identifier">total</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">factory_output</span>.<span class="ruby-identifier">quantity</span>
+28:           <span class="ruby-keyword kw">end</span>
+29:           <span class="ruby-comment cmt"># Push the hash of values into the array             </span>
+30:           <span class="ruby-ivar">@factory_data</span><span class="ruby-operator">&lt;&lt;</span>{<span class="ruby-identifier">:factory_name=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">factory_name</span>,<span class="ruby-identifier">:factory_output=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">total</span>}
+31:       <span class="ruby-keyword kw">end</span>    
+32:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">default</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+In this function, we obtain total output of quantities and name of each
+factory from the database and plot them on a pie-chart. It stores URL to
+the &quot;<a href="DbExampleController.html#M000004">detailed</a>&quot;
+function in a variable passing FactoryId as parameter to the function which
+returns quantity produced and date of production of the factory that are
+obtained from database and which are plotted in a chart. This action
+retrieves the values from the database and constructs an array to hold,
+factory name, corresponding total output quantity and URL to the action
+which will generate the <a
+href="DbExampleController.html#M000004">detailed</a> chart. The view for
+this action default.html.erb will use the array values to construct the xml
+for this chart. To build the xml, the view takes help from the builder file
+(default_factories_quantity.builder)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/fusioncharts/db_example_controller.rb, line 41</span>
+41:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default</span>
+42:      <span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;content-type&quot;</span>]=<span class="ruby-value str">&quot;text/html&quot;</span>;
+43:     <span class="ruby-identifier">str_data_url</span> = <span class="ruby-value str">''</span>;
+44:     <span class="ruby-ivar">@animate_chart</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:animate</span>]
+45:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@animate_chart</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@animate_chart</span>.<span class="ruby-identifier">empty?</span>
+46:       <span class="ruby-ivar">@animate_chart</span> = <span class="ruby-value str">'1'</span>
+47:     <span class="ruby-keyword kw">end</span>
+48:     <span class="ruby-comment cmt">#Get data from factory masters table</span>
+49:     
+50:     <span class="ruby-identifier">factory_masters</span> = <span class="ruby-constant">Fusioncharts</span><span class="ruby-operator">::</span><span class="ruby-constant">FactoryMaster</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>)
+51:     
+52:     <span class="ruby-ivar">@factory_data</span> = []
+53:     <span class="ruby-comment cmt">#Loop through each record</span>
+54:       <span class="ruby-identifier">factory_masters</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">factory_master</span><span class="ruby-operator">|</span> 
+55:           <span class="ruby-identifier">total</span> = <span class="ruby-value">0</span><span class="ruby-value">.0</span>
+56:           <span class="ruby-comment cmt">#Get factoryid and factoryname </span>
+57:           <span class="ruby-identifier">factory_id</span> = <span class="ruby-identifier">factory_master</span>.<span class="ruby-identifier">id</span>
+58:           <span class="ruby-identifier">factory_name</span> = <span class="ruby-identifier">factory_master</span>.<span class="ruby-identifier">name</span>
+59:           <span class="ruby-identifier">factory_master</span>.<span class="ruby-identifier">factory_output_quantities</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">factory_output</span><span class="ruby-operator">|</span>
+60:                   <span class="ruby-identifier">total</span> = <span class="ruby-identifier">total</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">factory_output</span>.<span class="ruby-identifier">quantity</span>
+61:           <span class="ruby-keyword kw">end</span>
+62:           <span class="ruby-comment cmt"># Escape the URL </span>
+63:           <span class="ruby-identifier">str_data_url</span> = <span class="ruby-value str">&quot;/Fusioncharts/db_example/detailed?&quot;</span><span class="ruby-operator">+</span><span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-value str">&quot;FactoryId&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-value str">&quot;=&quot;</span><span class="ruby-operator">+</span><span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">factory_id</span>.<span class="ruby-identifier">to_s</span>)
+64:           <span class="ruby-comment cmt"># Put the hash of values in the array</span>
+65:           <span class="ruby-ivar">@factory_data</span><span class="ruby-operator">&lt;&lt;</span>{<span class="ruby-identifier">:str_data_url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">str_data_url</span>, <span class="ruby-identifier">:factory_name=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">factory_name</span>, <span class="ruby-identifier">:factory_output=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">total</span>}
+66:       <span class="ruby-keyword kw">end</span>
+67:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">detailed</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This action retrieves the quantity and date of production of the factory
+identified by the request parameter expected &quot;FactoryId&quot; The view
+for this action is detailed.html.erb and it uses the builder file
+factory_details.builder to build the xml for the column chart.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/fusioncharts/db_example_controller.rb, line 73</span>
+73:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">detailed</span>
+74:       <span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;content-type&quot;</span>]=<span class="ruby-value str">&quot;text/html&quot;</span>;
+75:       <span class="ruby-ivar">@factory_id</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:FactoryId</span>]
+76:       <span class="ruby-ivar">@factory_data</span> = []
+77:       
+78:       <span class="ruby-identifier">factory_master</span> = <span class="ruby-constant">Fusioncharts</span><span class="ruby-operator">::</span><span class="ruby-constant">FactoryMaster</span>. <span class="ruby-identifier">find</span>(<span class="ruby-ivar">@factory_id</span>)
+79:       <span class="ruby-identifier">factory_master</span>.<span class="ruby-identifier">factory_output_quantities</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">factory_output</span><span class="ruby-operator">|</span>
+80:                       <span class="ruby-identifier">date_of_production</span> = <span class="ruby-identifier">factory_output</span>.<span class="ruby-identifier">date_pro</span>
+81:                       <span class="ruby-comment cmt"># Formats the date to dd/mm</span>
+82:                       <span class="ruby-comment cmt">#formatted_date = date_of_production.strftime('%d/%m')</span>
+83:                       <span class="ruby-comment cmt"># Formats the date to dd/mm without leading zeroes</span>
+84:                       <span class="ruby-identifier">formatted_date</span> = <span class="ruby-identifier">format_date_remove_zeroes</span>(<span class="ruby-identifier">date_of_production</span>)
+85:                       <span class="ruby-identifier">quantity_number</span> = <span class="ruby-identifier">factory_output</span>.<span class="ruby-identifier">quantity</span>
+86:                       <span class="ruby-ivar">@factory_data</span><span class="ruby-operator">&lt;&lt;</span>{<span class="ruby-identifier">:date_of_production=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">formatted_date</span>,<span class="ruby-identifier">:quantity_number=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">quantity_number</span>}
+87:       <span class="ruby-keyword kw">end</span>
+88:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
