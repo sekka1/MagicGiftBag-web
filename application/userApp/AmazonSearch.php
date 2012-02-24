@@ -8,7 +8,7 @@ defined('AWS_API_KEY') or define('AWS_API_KEY', 'AKIAJO6OOIFG3LCMZPGA');
 defined('AWS_API_SECRET_KEY') or define('AWS_API_SECRET_KEY', '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');
 defined('AWS_ASSOCIATE_TAG') or define('AWS_ASSOCIATE_TAG', 'wedvite-20');
 
-require '/usr/local/zend/apache2/htdocs/magicgiftbag.com/application/userApp/AmazonECS.class.php';
+require '/var/www/magicgiftbag.com/application/userApp/AmazonECS.class.php';
 
 class AmazonSearch {
 
