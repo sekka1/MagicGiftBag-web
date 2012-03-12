@@ -5,9 +5,9 @@
 ////////////////////////////////////////////
 
 // Files to manip
-defined('AUGMENT_SEARCH_TERM') or define('AUGMENT_SEARCH_TERM', '/usr/local/zend/apache2/htdocs/magicgiftbag.com/application/configs/augmentSearchTerms.txt');
-defined('PERSONA_TYPE') or define('PERSONA_TYPE', '/usr/local/zend/apache2/htdocs/magicgiftbag.com/application/configs/personaType.txt');
-defined('PERSONA_PRODUCTS') or define('PERSONA_PRODUCT', '/usr/local/zend/apache2/htdocs/magicgiftbag.com/application/configs/personaProducts.txt');
+defined('AUGMENT_SEARCH_TERM') or define('AUGMENT_SEARCH_TERM', '/var/www/magicgiftbag.com/application/configs/augmentSearchTerms.txt');
+defined('PERSONA_TYPE') or define('PERSONA_TYPE', '/var/www//magicgiftbag.com/application/configs/personaType.txt');
+defined('PERSONA_PRODUCTS') or define('PERSONA_PRODUCT', '/var/www//magicgiftbag.com/application/configs/personaProducts.txt');
 
 class EngineTuning
 {
