@@ -1,1 +1,1 @@
-mysqldump -h ec2-107-20-202-28.compute-1.amazonaws.com -u compute Gifts -psunshine1! > configs/MGB-sql-111711.sql
+mysqldump -h ec2-107-20-202-28.compute-1.amazonaws.com -u compute Gifts -psunshine1! > configs/MGB-sql-latest.sql
