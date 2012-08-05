@@ -105,7 +105,7 @@ class GiftEngine{
             print_r( $topCategoriesHits );
         }
 
-        $this->view->topCategoriesHits = $topCategoriesHits;
+        //$this->view->topCategoriesHits = $topCategoriesHits;
 
         return $topCategoriesHits;
 
@@ -234,13 +234,38 @@ class GiftEngine{
         //$getTopCategoryListMobile['interests'] = array();//json_decode( $this->getTopCategoryListMobile( $request_vars ), true );
         $getTopCategoryListMobile['interests'] = json_decode( $this->getTopCategoryListMobile( $request_vars ), true );
         $getUserPersonaTypeMobile['persona'] = json_decode( $this->getUserPersonaTypeMobile( $request_vars ), true ); 
-
         $aggregatedArray = array();
 
         array_push( $aggregatedArray, $getTopCategoryListMobile );
         array_push( $aggregatedArray, $getUserPersonaTypeMobile );
 //print_r( $aggregatedArray ); 
+
+        // Replace likes with what we want
+        $user_fake = $request_vars->getParam( 'userID' );
+        $aggregatedArray = $this->fakeUser( $aggregatedArray, $user_fake );
+
         return json_encode( $aggregatedArray );
+    }
+    public function fakeUser( $aggregatedArray, $user_id ){
+        // Fill in fake values for specidfic users
+
+        if( $user_id == '643980473' ){
+            // Garland's friend - Arron Jackson
+
+            $temp = '[{"interests":[{"name":"you suck","category":"Retail and consumer merchandise","id":"119037066972","created_time":"2011-07-26T19:59:54+0000"},{"name":"babes","category":"Professional sports team","id":"99559607813","created_time":"2011-12-07T17:04:49+0000"}]},{"persona":[{"name":"Sports_Fan","value":2},{"name":"Health_Nut","value":1}]}]';
+
+            $aggregatedArray = json_decode( $temp, true );
+        }
+        if( $user_id == '695825980' ){
+            // Abdullah's friend - Ray Casey
+            
+            $temp = '[{"interests":[{"name":"Irish Beer Mug","category":"Retail and consumer merchandise","id":"119037066972","created_time":"2011-07-26T19:59:54+0000"},{"name":"Rugby","category":"Professional sports team","id":"99559607813","created_time":"2011-12-07T17:04:49+0000"},{"name":"County Limerick","category":"Professional sports team","id":"99559607813","created_time":"2011-12-07T17:04:49+0000"},{"name":"Apple","category":"Professional sports team","id":"99559607813","created_time":"2011-12-07T17:04:49+0000"}]},{"persona":[]}]';
+
+            $aggregatedArray = json_decode( $temp, true );
+
+        }
+
+        return $aggregatedArray;
     }
 }
 
