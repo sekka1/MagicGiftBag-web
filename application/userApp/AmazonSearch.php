@@ -3,11 +3,6 @@
 //
 //  It also takes in the user's key and associate tags that will get credit for this click through and buy
 
-// For Amazon API
-defined('AWS_API_KEY') or define('AWS_API_KEY', 'AKIAJO6OOIFG3LCMZPGA');
-defined('AWS_API_SECRET_KEY') or define('AWS_API_SECRET_KEY', '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');
-defined('AWS_ASSOCIATE_TAG') or define('AWS_ASSOCIATE_TAG', 'wedvite-20');
-
 require 'AmazonECS.class.php';
 
 class AmazonSearch {
